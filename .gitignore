@@ -1,0 +1,41 @@
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*.swp
+*.*-swp
+
+# OSX
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+# IDE settings
+.project
+.idea
+.vscore
+
+# Node
+node_modules
+package-lock.json
+
+# Generated files
+dist
+test/generated
+*.log
+*.tmp
+
+.envrc
+.direnv

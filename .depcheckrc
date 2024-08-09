@@ -1,0 +1,9 @@
+ignores: [
+  "@types/eslint__js",
+  "@types/jest",
+  "globals",
+  "rimraf",
+  "ts-jest",
+]
+skip-missing: true
+quiet: true

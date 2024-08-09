@@ -1,0 +1,291 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "foo/b.html";
+  var d_default = "foo/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "foo/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///blump/b.html";
+  var d_default = "ws:///blump/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///blump/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///quux/b.html";
+  var d_default = "ws:///quux/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///quux/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///bar/b.html";
+  var d_default = "ws:///bar/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///bar/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "foo/b.html";
+  var d_default = "foo/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "foo/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///blump/b.html";
+  var d_default = "ws:///blump/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///blump/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///quux/b.html";
+  var d_default = "ws:///quux/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///quux/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/a.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var b_default = "ws:///bar/b.html";
+  var d_default = "ws:///bar/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/b.html 1`] = `
+"< body > </body><script>"use strict";
+(() => {
+  var d_default = "ws:///bar/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
