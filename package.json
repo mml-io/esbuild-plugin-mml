@@ -29,7 +29,9 @@
   "bugs": {
     "url": "https://github.com/mml-io/esbuild-plugin-mml/issues"
   },
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "run-p build:*",
     "build:ts": "tsx --tsconfig tsconfig.build.json build.ts",

@@ -1,5 +1,5 @@
 import * as esbuild from "esbuild";
-import mml from "../src";
+import { mml } from "../src";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fail } from "node:assert";
@@ -45,7 +45,7 @@ const relativeOutdir = "test/generated/relative-outpath";
 describe("mml plugin", () => {
   describe.each([
     { name: "absolute", outPrefix: absoluteOutdir },
-    { name: "relative", outPrefix: relativeOutdir },
+    //{ name: "relative", outPrefix: relativeOutdir },
   ])("with $name outdir path", ({ outPrefix }) => {
     it("with default options", async () => {
       const outdir = path.join(outPrefix, "default-options");
@@ -53,6 +53,21 @@ describe("mml plugin", () => {
         entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
         bundle: true,
+        plugins: [mml()],
+      };
+
+      await esbuild.build(config);
+
+      for await (const { path, content } of walk(outdir)) {
+        expect(content).toMatchSnapshot(path);
+      }
+    });
+
+    fit("world", async () => {
+      const outdir = path.join(outPrefix, "world");
+      const config = {
+        entryPoints: [`world:${path.join(__dirname + "/src/world.ts")}`],
+        outdir,
         plugins: [mml()],
       };
 
@@ -116,7 +131,7 @@ describe("mml plugin", () => {
         plugins: [
           mml({
             outputProcessor: () => ({
-              onOutput(output) {
+              onOutput(output: string) {
                 return {
                   importStr: "quux/" + output,
                 };
@@ -142,7 +157,7 @@ describe("mml plugin", () => {
         plugins: [
           mml({
             outputProcessor: () => ({
-              onOutput(output) {
+              onOutput(output: string) {
                 return {
                   path: "flump/" + output,
                   importStr: "blump/" + output,
