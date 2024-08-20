@@ -45,15 +45,17 @@ const relativeOutdir = "test/generated/relative-outpath";
 describe("mml plugin", () => {
   describe.each([
     { name: "absolute", outPrefix: absoluteOutdir },
-    //{ name: "relative", outPrefix: relativeOutdir },
+    { name: "relative", outPrefix: relativeOutdir },
   ])("with $name outdir path", ({ outPrefix }) => {
     it("with default options", async () => {
       const outdir = path.join(outPrefix, "default-options");
       const config = {
-        entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
-        bundle: true,
-        plugins: [mml()],
+        plugins: [
+          mml({
+            documents: ["test/src/a.ts"],
+          }),
+        ],
       };
 
       await esbuild.build(config);
@@ -63,12 +65,15 @@ describe("mml plugin", () => {
       }
     });
 
-    fit("world", async () => {
+    it("world", async () => {
       const outdir = path.join(outPrefix, "world");
       const config = {
-        entryPoints: [`world:${path.join(__dirname + "/src/world.ts")}`],
         outdir,
-        plugins: [mml()],
+        plugins: [
+          mml({
+            worlds: ["test/src/world.ts"],
+          }),
+        ],
       };
 
       await esbuild.build(config);
@@ -81,11 +86,10 @@ describe("mml plugin", () => {
     it("with import prefix", async () => {
       const outdir = path.join(outPrefix, "import-prefix");
       const config = {
-        entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
-        bundle: true,
         plugins: [
           mml({
+            documents: ["test/src/a.ts"],
             importPrefix: "foo/",
           }),
         ],
@@ -101,11 +105,10 @@ describe("mml plugin", () => {
     it("with new path from output processor", async () => {
       const outdir = path.join(outPrefix, "new-path");
       const config = {
-        entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
-        bundle: true,
         plugins: [
           mml({
+            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output) {
                 return { path: path.join("bar/", output) };
@@ -125,11 +128,10 @@ describe("mml plugin", () => {
     it("with new import from output processor", async () => {
       const outdir = path.join(outPrefix, "new-import");
       const config = {
-        entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
-        bundle: true,
         plugins: [
           mml({
+            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output: string) {
                 return {
@@ -151,11 +153,10 @@ describe("mml plugin", () => {
     it("with new import and path from output processor", async () => {
       const outdir = path.join(outPrefix, "new-import-and-path");
       const config = {
-        entryPoints: [path.join(__dirname + "/src/a.ts")],
         outdir,
-        bundle: true,
         plugins: [
           mml({
+            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output: string) {
                 return {

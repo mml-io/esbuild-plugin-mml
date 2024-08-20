@@ -1,84 +1,26 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/a.html 1`] = `
-"< body > </body><script>"use strict";
-var b_default = "ws:///b.html";
-var d_default = "ws:///d.html";
-var c = "wat-" + d_default;
-console.log(b_default, d_default);
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
 </script > "
 `;
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/a.js 1`] = `
-""use strict";
-var b_default = "mml:b.html ";
-var d_default = "mml:d.html ";
-var c = "wat-" + d_default;
-console.log(b_default, d_default);
-"
-`;
-
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/b.html 1`] = `
-"< body > </body><script>"use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var b_exports = {};
-__export(b_exports, {
-  c: () => c,
-  d: () => d_default
-});
-module.exports = __toCommonJS(b_exports);
-var d_default = "ws:///d.html";
-var c = "wat-" + d_default;
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
 </script > "
 `;
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/b.js 1`] = `
-""use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var b_exports = {};
-__export(b_exports, {
-  c: () => c,
-  d: () => d_default
-});
-module.exports = __toCommonJS(b_exports);
-var d_default = "mml:d.html ";
-var c = "wat-" + d_default;
-"
-`;
-
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -87,151 +29,27 @@ exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/
 "
 `;
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/stdin.js 1`] = `
-"(() => {
-  var __getOwnPropNames = Object.getOwnPropertyNames;
-  var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
-  };
-  var require_world = __commonJS({
-    "test/src/world.ts"() {
-      require_world();
-    }
-  });
-  require_world();
-})();
-"
-`;
-
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.html 1`] = `
-"< body > </body><script>(() => {
-})();
-</script > "
-`;
-
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.js 1`] = `
-"(() => {
-})();
-"
-`;
-
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.ts 1`] = `
-""use strict";
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/a.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var name = "my-world";
-  var world_default = {
-    id: \`\${name}-1\`,
-    name: "my-world",
-    mmlDocumentConfiguration: {
-      mmlDocuments: {
-        duck: {
-          url: "foo"
-        }
-      }
-    }
-  };
+  var b_default = "foo/b.html";
+  var d_default = "foo/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
 })();
-"
+</script > "
 `;
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world-CZ2DWM6A.ts 1`] = `
-""use strict";
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/b.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var name = "my-world";
-  var world_default = {
-    id: \`\${name}-1\`,
-    name: "my-world",
-    mmlDocumentConfiguration: {
-      mmlDocuments: {
-        duck: {
-          url: "foo"
-        }
-      }
-    }
-  };
+  var d_default = "foo/c/d.html";
+  var c = "wat-" + d_default;
 })();
-"
-`;
-
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/a.html 1`] = `
-"< body > </body><script>"use strict";
-var b_default = "ws:///b.html";
-var d_default = "ws:///d.html";
-var c = "wat-" + d_default;
-console.log(b_default, d_default);
 </script > "
 `;
 
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/a.js 1`] = `
-""use strict";
-var b_default = "mml:b.html ";
-var d_default = "mml:d.html ";
-var c = "wat-" + d_default;
-console.log(b_default, d_default);
-"
-`;
-
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/b.html 1`] = `
-"< body > </body><script>"use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var b_exports = {};
-__export(b_exports, {
-  c: () => c,
-  d: () => d_default
-});
-module.exports = __toCommonJS(b_exports);
-var d_default = "ws:///d.html";
-var c = "wat-" + d_default;
-</script > "
-`;
-
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/b.js 1`] = `
-""use strict";
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
-var b_exports = {};
-__export(b_exports, {
-  c: () => c,
-  d: () => d_default
-});
-module.exports = __toCommonJS(b_exports);
-var d_default = "mml:d.html ";
-var c = "wat-" + d_default;
-"
-`;
-
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -240,8 +58,266 @@ exports[`mml plugin with relative outdir path world: generated/relative-outpath/
 "
 `;
 
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.js 1`] = `
-"(() => {
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///blump/b.html";
+  var d_default = "ws:///blump/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
 })();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///blump/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
 "
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///quux/b.html";
+  var d_default = "ws:///quux/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///quux/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///bar/b.html";
+  var d_default = "ws:///bar/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///bar/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.json 1`] = `
+"{
+  "default": {
+    "id": "my-world-1",
+    "name": "my-world",
+    "mmlDocumentConfiguration": {
+      "mmlDocuments": {
+        "duck": {
+          "url": "foo"
+        }
+      }
+    }
+  }
+}"
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "foo/b.html";
+  var d_default = "foo/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "foo/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///blump/b.html";
+  var d_default = "ws:///blump/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///blump/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///quux/b.html";
+  var d_default = "ws:///quux/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///quux/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///bar/b.html";
+  var d_default = "ws:///bar/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///bar/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.json 1`] = `
+"{
+  "default": {
+    "id": "my-world-1",
+    "name": "my-world",
+    "mmlDocumentConfiguration": {
+      "mmlDocuments": {
+        "duck": {
+          "url": "foo"
+        }
+      }
+    }
+  }
+}"
 `;

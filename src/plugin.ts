@@ -1,8 +1,9 @@
-import lockfile from "proper-lockfile";
 import esbuild from "esbuild";
 import fs from "node:fs";
 import fsp from "node:fs/promises";
 import path from "node:path";
+import util from "node:util";
+import { merge } from "es-toolkit";
 
 export interface OutputProcessorResult {
   path?: string;
@@ -25,195 +26,162 @@ export type OutputProcessorProvider = (
 
 export interface MMLPluginOptions {
   verbose?: boolean;
+  worlds?: string[];
+  documents?: string[];
   outputProcessor?: OutputProcessorProvider;
   importPrefix?: string;
 }
 
-export function mml({
-  verbose = false,
-  importPrefix = "ws:///",
-  outputProcessor: outputProcessorProvider,
-}: MMLPluginOptions = {}): esbuild.Plugin {
+export interface WorldPluginOptions {
+  verbose?: boolean;
+  onDiscoveredDocument: (path: string) => void;
+}
+
+export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
+  const {
+    verbose,
+    documents = [],
+    worlds = [],
+    outputProcessor: outputProcessorProvider,
+    importPrefix = "ws:///",
+  } = args;
   const log = verbose
     ? (...args: unknown[]) => {
         console.log("[mml]:", ...args);
       }
     : noop;
-  let results: esbuild.BuildResult[] = [];
-  let importStubs: Record<string, string> = {};
-  const worlds = new Set<string>();
 
-  importPrefix += importPrefix.endsWith("/") ? "" : "/";
-
-  // We create a new non-root instance of the plugin anytime we need to run a child build process
-  // This signifies to the the child plugin that it should store its result in the `results` array
-  // so that the root instance can merge them for the final result.
-  const makePlugin = (isRoot = false): esbuild.Plugin => ({
+  return {
     name: "mml",
     setup(build) {
-      // We rely on the metfile to perform JS-to-HTML embedding and file renames.
-      build.initialOptions.metafile = true;
-      // We must bundle files so that there is only one JS file per MML document
-      build.initialOptions.bundle = true;
+      const { initialOptions } = build;
+      log("setup", { initialOptions, args });
 
+      (initialOptions.loader ??= {})[".html"] = "copy";
+      initialOptions.entryPoints = documents;
+      initialOptions.metafile = true;
+      initialOptions.bundle = true;
       const outdir = (build.initialOptions.outdir ??= "build");
 
-      build.onStart(() => {
-        if (isRoot) {
-          log("onStart: acquiring lock on build directory");
-          fs.rmSync(outdir, { recursive: true, force: true });
-          fs.mkdirSync(outdir, { recursive: true });
-          try {
-            lockfile.lockSync(outdir);
-          } catch (error) {
-            return {
-              errors: [
-                {
-                  text: "failed to acquire lock on build directory",
-                  detail: error,
-                },
-              ],
-            };
+      const discoveredDocuments = new Set<string>();
+      const importStubs: Record<string, string> = Object.fromEntries(
+        documents.map((document) => [document, `mml:${document}`]),
+      );
+
+      const resolveMML =
+        (build: esbuild.PluginBuild): Parameters<typeof build.onResolve>[1] =>
+        async (args) => {
+          log("onResolve(/mml:/)", args);
+
+          const { path: prefixedPath, ...rest } = args;
+
+          const resolved = await build.resolve(
+            prefixedPath.slice("mml:".length),
+            rest,
+          );
+
+          const relpath = path.relative(process.cwd(), resolved.path);
+          if (!(initialOptions.entryPoints as string[]).includes(relpath)) {
+            discoveredDocuments.add(relpath);
           }
 
-          results = [];
-          importStubs = {};
-          worlds.clear();
-        }
-      });
-
-      // Main entry point for any imports that are prefixed with "mml:".
-      // We strip the prefix and resolve the path with esbuild before handing off to
-      // an mml loader.
-      build.onResolve({ filter: /^mml:/ }, async (args) => {
-        log("onResolve", args);
-        const { path, ...rest } = args;
-        const result = await build.resolve(path.slice("mml:".length), rest);
-        return { ...result, namespace: "mml" };
-      });
-
-      // Main entry point for world configs - these should only be entrypoints.
-      // We strip the prefix and resolve the path with esbuild before handing off to
-      // an mml loader.
-      build.onResolve({ filter: /^world:/ }, async (args) => {
-        log("onResolve", args);
-        const { path, ...rest } = args;
-        if (args.kind !== "entry-point") {
+          importStubs[relpath] = `mml:${relpath}`;
           return {
-            errors: [
-              {
-                text: `world config used as ${args.kind} but may only be an of kind 'entry-point'`,
-              },
-            ],
+            ...resolved,
+            namespace: "mml",
           };
-        }
-        const newPath = path.slice("world:".length);
-        const result = await build.resolve(newPath, rest);
-        return result;
+        };
+
+      const stubMMLImport: Parameters<typeof build.onLoad>[1] = (
+        args: esbuild.OnLoadArgs,
+      ) => {
+        log("onLoad(/mml:/)", { ...args, importStubs, cwd: process.cwd() });
+
+        return {
+          contents: importStubs[path.relative(process.cwd(), args.path)],
+          loader: "text",
+        };
+      };
+
+      // Fork off a separate build of the worlds as need to target node (cjs or esm)
+      // rather than the browser (iife).
+      const worldBuild = build.esbuild.build({
+        ...initialOptions,
+        entryPoints: worlds,
+        format: "cjs",
+        plugins: [
+          {
+            name: "mml-world",
+            setup(build) {
+              build.onResolve({ filter: /mml:/ }, resolveMML(build));
+              build.onLoad({ filter: /.*/, namespace: "mml" }, stubMMLImport);
+              build.onEnd(async (result) => {
+                log("onEnd", util.inspect(result, false, 10));
+
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                const outputs = result.metafile!.outputs;
+                for (const [jsPath, meta] of Object.entries(outputs)) {
+                  if (!meta.entryPoint) continue;
+                  const jsonPath = jsPath.replace(jsExt, ".json");
+                  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
+                  const js = require(path.resolve(jsPath));
+                  const json = JSON.stringify(js, null, 2);
+                  log("writing JSON file:", jsonPath);
+                  await fsp.writeFile(jsonPath, json);
+                  remove(outputs, jsPath);
+                  outputs[jsonPath] = { ...meta, bytes: json.length };
+                }
+              });
+            },
+          },
+        ],
       });
 
-      // Loader for any (originally) mml-prefixed paths. This requests the file be built by a
-      // child esbuild instance, however we control the rewriting of the import paths using the
-      // "text" loader to embed the path to the document as a string within the importer.
-      build.onLoad({ filter: /.*/, namespace: "mml" }, async (args) => {
-        log("onLoad", args);
-        const { path: entrypoint } = args;
-        const result = await build.esbuild.build({
-          ...build.initialOptions,
-          metafile: true,
-          entryPoints: [entrypoint],
-          plugins: [makePlugin()],
-        });
-        const outPath = Object.keys(result.metafile.outputs)[0];
-        const relativeOutPath = path
-          .relative(outdir, outPath)
-          .replace(/\.[tj]sx?/, ".html");
-        const importStub = `mml:${relativeOutPath} `;
-
-        importStubs[relativeOutPath] = importStub;
-
-        return { contents: importStub, loader: "text" };
-      });
-
-      // Any raw HTML files should just be copied to the build directory.
-      // TODO: These could contain script tags with references to local files,
-      //       we may want to consider loading and embedding them directly into the HTML.
-      build.onLoad({ filter: /\.html$/ }, async (args) => {
-        log("onLoad", args);
-        const { path } = args;
-        const contents = await fsp.readFile(path, { encoding: "utf8" });
-        return { contents, loader: "copy" };
-      });
+      build.onResolve({ filter: /mml:/ }, resolveMML(build));
+      build.onLoad({ filter: /.*/, namespace: "mml" }, stubMMLImport);
 
       build.onEnd(async (result) => {
-        if (!isRoot) {
-          results.push(result);
+        log("onEnd", util.inspect({ discoveredDocuments }, false, 10));
+
+        await worldBuild;
+
+        if (discoveredDocuments.size > 0) {
+          await esbuild.build({
+            ...initialOptions,
+            plugins: [
+              mml({
+                ...args,
+                // FIXME: We could eliminate the need to rebuild the initial
+                // documents again here, if we pass some state down the chain.
+                documents: [...documents, ...discoveredDocuments],
+              }),
+            ],
+          });
+
           return;
         }
 
+        merge(result, await worldBuild);
+
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const outputs = result.metafile!.outputs;
+
+        for (const [jsPath, meta] of Object.entries(outputs)) {
+          if (!meta.entryPoint || !jsPath.endsWith(".js")) continue;
+
+          const htmlPath = jsPath.replace(jsExt, ".html");
+          remove(outputs, jsPath);
+          const js = await fsp.readFile(jsPath, { encoding: "utf8" });
+          log("writing HTML file:", htmlPath);
+          const html = `<body></body><script>${js}</script > `;
+          await fsp.writeFile(htmlPath, html);
+          outputs[htmlPath] = { ...meta, bytes: html.length };
+        }
         const outputProcessor = outputProcessorProvider?.(log);
 
-        // We are in the root plugin instance. All child instances have finished and
-        // pushed their results into the array. Now we combine all the results into one.
-        const combinedResults = results.reduce(
-          (acc, val) => ({
-            errors: acc.errors.concat(val.errors),
-            warnings: acc.warnings.concat(val.warnings),
-            outputFiles: (acc.outputFiles ?? []).concat(val.outputFiles ?? []),
-            metafile: {
-              inputs: { ...acc.metafile?.inputs, ...val.metafile?.inputs },
-              outputs: { ...acc.metafile?.outputs, ...val.metafile?.outputs },
-            },
-            mangleCache: { ...acc.mangleCache, ...val.mangleCache },
-          }),
-          result,
-        );
-
-        Object.assign(result, combinedResults);
-
-        const { errors } = result;
-        if (errors.length > 0) {
-          log("onEnd: errors in build, releasing lock on build directory", {
-            errors,
-          });
-          lockfile.unlockSync(outdir);
-          return { errors };
-        }
-
-        // If we have a any js files, that do not have a corresponding HTML file,
-        // we need to create one and embed the JavaScript into a <script> tag.
-        // Then we can delete the JavaScript file as it is no longer needed.
-        const outputs = result.metafile!.outputs; // eslint-disable-line @typescript-eslint/no-non-null-assertion
-        for (const [jsPath, meta] of Object.entries(outputs)) {
-          if (!jsPath.endsWith(".js")) {
-            continue;
-          }
-          const relPath = path.relative(outdir, jsPath);
-          console.log({ worlds, relPath });
-          if (worlds.has(relPath)) {
-            const jsonPath = jsPath.replace(jsExt, ".json");
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-require-imports
-            const output = require(path.resolve(jsPath));
-            console.log(output);
-            console.log({ jsPath, jsonPath });
-            continue;
-          }
-
-          // Otherwise it's a JS file that needs to bundled into an html file
-          const htmlPath = jsPath.replace(jsExt, ".html");
-          if (!(htmlPath in outputs)) {
-            remove(outputs, jsPath);
-            const js = await fsp.readFile(jsPath, { encoding: "utf8" });
-            const html = `< body > </body><script>${js}</script > `;
-            await fsp.writeFile(htmlPath, html);
-            outputs[htmlPath] = { ...meta, bytes: meta.bytes + 30 };
-          }
-        }
-
-        // Use the user-provided processor to generate a new name for the files, then
-        // update the filenames on disk, metafile.outputs and the importStubs (if present).
         if (outputProcessor) {
           for (const [output, meta] of Object.entries(outputs)) {
+            const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
             const relPath = path.relative(outdir, output);
             const result = await outputProcessor.onOutput(relPath);
             if (!result) {
@@ -221,6 +189,13 @@ export function mml({
             }
             const { path: newPath = relPath, importStr: newImport = newPath } =
               result;
+            log("Output processor result", {
+              entryPoint,
+              result,
+              newPath,
+              newImport,
+              importStubs,
+            });
             if (newPath !== relPath) {
               const newOutput = path.join(outdir, newPath);
               log("Renaming:", relPath, "->", newPath);
@@ -229,14 +204,25 @@ export function mml({
               outputs[newOutput] = meta;
               remove(outputs, output);
             }
-            if (newImport !== relPath && relPath in importStubs) {
-              importStubs[newImport] = importStubs[relPath];
-              remove(importStubs, relPath);
+            if (newImport !== meta.entryPoint) {
+              importStubs[newImport] = importStubs[entryPoint];
+              remove(importStubs, entryPoint);
+            }
+            log("New stubs", { importStubs });
+          }
+        } else {
+          for (const [output, meta] of Object.entries(outputs)) {
+            const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+            const newImport = path.relative(outdir, output);
+
+            if (newImport !== meta.entryPoint) {
+              importStubs[newImport] = importStubs[entryPoint];
+              remove(importStubs, entryPoint);
             }
           }
         }
 
-        //cleanupJS(outdir, log);
+        cleanupJS(outdir, log);
 
         // Now we go through all of the output files and rewrite the import stubs to
         // correct output path.
@@ -244,39 +230,27 @@ export function mml({
           Object.keys(outputs).map(async (output) => {
             let contents = await fsp.readFile(output, { encoding: "utf8" });
             for (const [file, stub] of Object.entries(importStubs)) {
-              // NOTE: Cannot use path.join here as it it should always use "/" rather than path.sep.
               const replacement = importPrefix + file;
               log("Replacing import stub:", {
-                file,
                 stub,
                 replacement,
                 output,
+                contents,
               });
               contents = contents.replaceAll(stub, replacement);
             }
             await fsp.writeFile(output, contents);
           }),
         );
-
-        const res = await outputProcessor?.onEnd?.(outdir, result);
-
-        log("onEnd: releasing lock on build directory");
-        lockfile.unlockSync(outdir);
-
-        log("onEnd", result);
-        return res;
       });
     },
-  });
-
-  return makePlugin(true);
+  };
 }
 
 export default mml;
 
 const jsExt = /\.js$/;
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function cleanupJS(inPath: string, log?: (...args: unknown[]) => void) {
   const stat = fs.statSync(inPath);
   const isJS = stat.isFile() && inPath.endsWith(".js");
