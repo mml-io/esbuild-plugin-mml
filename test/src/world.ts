@@ -1,16 +1,12 @@
-import type { WorldConfig } from "@mml-io/esbuild-plugin-mml";
-//import duck from "mml:./a";
+import type { MMLWorldConfig } from "@mml-io/esbuild-plugin-mml";
+import a from "mml:./a";
 
 const name = "my-world";
 
 export default {
-  id: `${name}-1`,
-  name: "my-world",
-  mmlDocumentConfiguration: {
-    mmlDocuments: {
-      duck: {
-        url: "foo",
-      },
+  mmlDocuments: {
+    duck: {
+      url: a,
     },
   },
-} satisfies WorldConfig;
+} satisfies MMLWorldConfig;

@@ -145,16 +145,41 @@ exports[`mml plugin with absolute outdir path with new path from output processo
 "
 `;
 
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
 exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.json 1`] = `
 "{
   "default": {
-    "id": "my-world-1",
-    "name": "my-world",
-    "mmlDocumentConfiguration": {
-      "mmlDocuments": {
-        "duck": {
-          "url": "foo"
-        }
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
       }
     }
   }
@@ -306,16 +331,41 @@ exports[`mml plugin with relative outdir path with new path from output processo
 "
 `;
 
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script > "
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
 exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.json 1`] = `
 "{
   "default": {
-    "id": "my-world-1",
-    "name": "my-world",
-    "mmlDocumentConfiguration": {
-      "mmlDocuments": {
-        "duck": {
-          "url": "foo"
-        }
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
       }
     }
   }
