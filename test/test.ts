@@ -3,6 +3,9 @@ import { mml } from "../src";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fail } from "node:assert";
+import { documentContext } from "../src/documents";
+import { worldContext } from "../src/world";
+import { makeResultProcessor } from "../src/results";
 
 if (process.cwd() !== path.dirname(__dirname)) {
   console.log(process.cwd(), path.dirname(__dirname));
@@ -41,6 +44,110 @@ async function* walk(dir: string): AsyncGenerator<{
 
 const absoluteOutdir = __dirname + "/generated/absolute-outpath";
 const relativeOutdir = "test/generated/relative-outpath";
+
+describe("worldContext", () => {
+  let ctx: esbuild.BuildContext | undefined = undefined;
+
+  afterEach(() => ctx?.dispose());
+
+  it("creates world JSON", async () => {
+    const outdir = path.join(relativeOutdir, "world-context");
+
+    ctx = await worldContext({
+      worlds: ["test/src/world.ts"],
+      options: { outdir },
+      onEnd: async (_, discoveredDocuments, importStubs) => {
+        for await (const { path, content } of walk(outdir)) {
+          expect(content).toMatchSnapshot(path);
+        }
+        expect(discoveredDocuments).toEqual(new Set(["test/src/a.ts"]));
+        expect(importStubs).toEqual({
+          "test/src/a.ts": "mml:test/src/a.ts",
+        });
+      },
+    });
+
+    await ctx.rebuild();
+
+    expect.hasAssertions();
+  });
+});
+
+describe("resultProcessor", () => {
+  let ctx: esbuild.BuildContext | undefined = undefined;
+
+  afterEach(() => ctx?.dispose());
+
+  it("re-writes import paths for worlds", async () => {
+    const outdir = path.join(relativeOutdir, "result-processor", "world");
+
+    const onEnd = makeResultProcessor(outdir, "wss://", console.log);
+
+    ctx = await worldContext({
+      worlds: ["test/src/world.ts"],
+      options: { outdir },
+      onEnd: async (result, _, importStubs) => {
+        onEnd("world", result, importStubs);
+        for await (const { path, content } of walk(outdir)) {
+          expect(content).toMatchSnapshot(path);
+        }
+      },
+    });
+
+    await ctx.rebuild();
+
+    expect.hasAssertions();
+  });
+
+  it("re-writes import paths for documents", async () => {
+    const outdir = path.join(relativeOutdir, "result-processor", "world");
+
+    const onEnd = makeResultProcessor(outdir, "wss://", console.log);
+
+    ctx = await documentContext({
+      documents: ["test/src/a.ts"],
+      options: { outdir },
+      onEnd: async (result, importStubs) => {
+        onEnd("document", result, importStubs);
+        for await (const { path, content } of walk(outdir)) {
+          expect(content).toMatchSnapshot(path);
+        }
+      },
+    });
+
+    await ctx.rebuild();
+
+    expect.hasAssertions();
+  });
+});
+
+describe("documentContext", () => {
+  let ctx: esbuild.BuildContext | undefined = undefined;
+
+  afterEach(() => ctx?.dispose());
+
+  it("creates MML HTML documents", async () => {
+    const outdir = path.join(relativeOutdir, "document-context");
+
+    ctx = await documentContext({
+      documents: ["test/src/a.ts"],
+      options: { outdir },
+      onEnd: async (_result, importStubs) => {
+        for await (const { path, content } of walk(outdir)) {
+          expect(content).toMatchSnapshot(path);
+        }
+        expect(importStubs).toEqual({
+          "test/src/b.ts": "mml:test/src/b.ts",
+          "test/src/c/d.html": "mml:test/src/c/d.html",
+        });
+      },
+    });
+
+    await ctx.rebuild();
+
+    expect.hasAssertions();
+  });
+});
 
 describe("mml plugin", () => {
   describe.each([
@@ -175,5 +282,89 @@ describe("mml plugin", () => {
         expect(content).toMatchSnapshot(path);
       }
     });
+  });
+});
+
+describe("context", () => {
+  it("rebuild", async () => {
+    // copy src files to a scratch directory
+    const scratchDir = path.join(__dirname, "scratch", "rebuild");
+    await fsp.rm(scratchDir, { recursive: true, force: true });
+    await fsp.mkdir(scratchDir, { recursive: true });
+    await fsp.cp("test/src", scratchDir, { recursive: true });
+
+    const outdir = path.join(relativeOutdir, "context", "rebuild");
+    const config = {
+      outdir,
+      plugins: [
+        mml({
+          worlds: ["test/scratch/rebuild/world.ts"],
+        }),
+      ],
+    };
+
+    const ctx = await esbuild.context(config);
+
+    await ctx.rebuild();
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path);
+    }
+
+    await fsp.appendFile(
+      "test/scratch/rebuild/a.ts",
+      "\nimport e from 'mml:./e'; console.log(e);",
+    );
+
+    await ctx.rebuild();
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path);
+    }
+
+    await ctx.dispose();
+  });
+
+  it("watch", async () => {
+    // copy src files to a scratch directory
+    const scratchDir = path.join(__dirname, "scratch", "watch");
+    await fsp.rm(scratchDir, { recursive: true, force: true });
+    await fsp.mkdir(scratchDir, { recursive: true });
+    await fsp.cp("test/src", scratchDir, { recursive: true });
+
+    const outdir = path.join(relativeOutdir, "context", "watch");
+    const config = {
+      outdir,
+      plugins: [
+        mml({
+          worlds: ["test/scratch/watch/world.ts"],
+        }),
+      ],
+    };
+
+    const ctx = await esbuild.context(config);
+
+    await ctx.watch();
+
+    await ctx.rebuild(); // Wait for initial build
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path);
+    }
+
+    await fsp.appendFile(
+      "test/scratch/watch/a.ts",
+      "\nimport e from 'mml:./e'; console.log(e);",
+    );
+
+    await new Promise<void>((resolve) => {
+      setTimeout(resolve, 100);
+    });
+
+    await ctx.dispose();
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path + ".new");
+    }
   });
 });

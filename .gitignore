@@ -34,6 +34,7 @@ package-lock.json
 # Generated files
 dist
 test/generated
+test/scratch
 *.log
 *.tmp
 
