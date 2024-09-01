@@ -96,8 +96,7 @@ export async function worldContext({
 
             if (result.errors.length > 0) {
               log("build failed with errors:", result.errors);
-              await onEnd?.(result, discoveredDocuments, importStubs);
-              return { errors: result.errors, warnings: result.warnings };
+              return;
             }
 
             assert(result.metafile);

@@ -6,6 +6,7 @@ import { fail } from "node:assert";
 import { documentContext } from "../src/documents";
 import { worldContext } from "../src/world";
 import { makeResultProcessor } from "../src/results";
+import { noop } from "es-toolkit";
 
 if (process.cwd() !== path.dirname(__dirname)) {
   console.log(process.cwd(), path.dirname(__dirname));
@@ -52,6 +53,7 @@ describe("worldContext", () => {
 
   it("creates world JSON", async () => {
     const outdir = path.join(relativeOutdir, "world-context");
+    await fsp.rm(outdir, { recursive: true, force: true });
 
     ctx = await worldContext({
       worlds: ["test/src/world.ts"],
@@ -80,14 +82,15 @@ describe("resultProcessor", () => {
 
   it("re-writes import paths for worlds", async () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
+    await fsp.rm(outdir, { recursive: true, force: true });
 
-    const onEnd = makeResultProcessor(outdir, "wss://", console.log);
+    const onEnd = makeResultProcessor(outdir, "wss://", noop);
 
     ctx = await worldContext({
       worlds: ["test/src/world.ts"],
       options: { outdir },
       onEnd: async (result, _, importStubs) => {
-        onEnd("world", result, importStubs);
+        await onEnd("world", result, importStubs);
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
         }
@@ -101,14 +104,15 @@ describe("resultProcessor", () => {
 
   it("re-writes import paths for documents", async () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
+    await fsp.rm(outdir, { recursive: true, force: true });
 
-    const onEnd = makeResultProcessor(outdir, "wss://", console.log);
+    const onEnd = makeResultProcessor(outdir, "wss://", noop);
 
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
       onEnd: async (result, importStubs) => {
-        onEnd("document", result, importStubs);
+        await onEnd("document", result, importStubs);
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
         }
@@ -128,6 +132,7 @@ describe("documentContext", () => {
 
   it("creates MML HTML documents", async () => {
     const outdir = path.join(relativeOutdir, "document-context");
+    await fsp.rm(outdir, { recursive: true, force: true });
 
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
@@ -156,13 +161,11 @@ describe("mml plugin", () => {
   ])("with $name outdir path", ({ outPrefix }) => {
     it("with default options", async () => {
       const outdir = path.join(outPrefix, "default-options");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
-        plugins: [
-          mml({
-            documents: ["test/src/a.ts"],
-          }),
-        ],
+        entryPoints: ["mml:test/src/a.ts"],
+        plugins: [mml()],
       };
 
       await esbuild.build(config);
@@ -174,13 +177,11 @@ describe("mml plugin", () => {
 
     it("world", async () => {
       const outdir = path.join(outPrefix, "world");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
-        plugins: [
-          mml({
-            worlds: ["test/src/world.ts"],
-          }),
-        ],
+        entryPoints: ["mml:test/src/world.ts"],
+        plugins: [mml()],
       };
 
       await esbuild.build(config);
@@ -192,11 +193,12 @@ describe("mml plugin", () => {
 
     it("with import prefix", async () => {
       const outdir = path.join(outPrefix, "import-prefix");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
+        entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
-            documents: ["test/src/a.ts"],
             importPrefix: "foo/",
           }),
         ],
@@ -211,11 +213,12 @@ describe("mml plugin", () => {
 
     it("with new path from output processor", async () => {
       const outdir = path.join(outPrefix, "new-path");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
+        entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
-            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output) {
                 return { path: path.join("bar/", output) };
@@ -234,11 +237,12 @@ describe("mml plugin", () => {
 
     it("with new import from output processor", async () => {
       const outdir = path.join(outPrefix, "new-import");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
+        entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
-            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output: string) {
                 return {
@@ -259,11 +263,12 @@ describe("mml plugin", () => {
 
     it("with new import and path from output processor", async () => {
       const outdir = path.join(outPrefix, "new-import-and-path");
+      await fsp.rm(outdir, { recursive: true, force: true });
       const config = {
         outdir,
+        entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
-            documents: ["test/src/a.ts"],
             outputProcessor: () => ({
               onOutput(output: string) {
                 return {
@@ -294,13 +299,12 @@ describe("context", () => {
     await fsp.cp("test/src", scratchDir, { recursive: true });
 
     const outdir = path.join(relativeOutdir, "context", "rebuild");
+    await fsp.rm(outdir, { recursive: true, force: true });
+
     const config = {
       outdir,
-      plugins: [
-        mml({
-          worlds: ["test/scratch/rebuild/world.ts"],
-        }),
-      ],
+      entryPoints: ["test/scratch/rebuild/world.ts"],
+      plugins: [mml()],
     };
 
     const ctx = await esbuild.context(config);
@@ -308,8 +312,13 @@ describe("context", () => {
     await ctx.rebuild();
 
     for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path);
+      expect(content).toMatchSnapshot(path + "/1");
     }
+
+    const originalContent = await fsp.readFile(
+      "test/scratch/rebuild/a.ts",
+      "utf-8",
+    );
 
     await fsp.appendFile(
       "test/scratch/rebuild/a.ts",
@@ -319,7 +328,18 @@ describe("context", () => {
     await ctx.rebuild();
 
     for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path);
+      expect(content).toMatchSnapshot(path + "/2");
+    }
+
+    // NOTE: This does not remove the generated HTML file for e.ts from the
+    // build directory in watch mode. We should clean up the output directory
+    // based on the outputs in the metafile.
+    fsp.writeFile("test/scratch/rebuild/a.ts", originalContent);
+
+    await ctx.rebuild();
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path + "/3");
     }
 
     await ctx.dispose();
@@ -333,23 +353,22 @@ describe("context", () => {
     await fsp.cp("test/src", scratchDir, { recursive: true });
 
     const outdir = path.join(relativeOutdir, "context", "watch");
+    await fsp.rm(outdir, { recursive: true, force: true });
+
     const config = {
       outdir,
-      plugins: [
-        mml({
-          worlds: ["test/scratch/watch/world.ts"],
-        }),
-      ],
+      entryPoints: ["test/scratch/watch/world.ts"],
+      plugins: [mml()],
     };
 
     const ctx = await esbuild.context(config);
 
     await ctx.watch();
 
-    await ctx.rebuild(); // Wait for initial build
+    await ctx.rebuild();
 
     for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path);
+      expect(content).toMatchSnapshot(path + "/1");
     }
 
     await fsp.appendFile(
@@ -357,14 +376,14 @@ describe("context", () => {
       "\nimport e from 'mml:./e'; console.log(e);",
     );
 
-    await new Promise<void>((resolve) => {
-      setTimeout(resolve, 100);
-    });
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path + "/2");
+    }
 
     await ctx.dispose();
 
-    for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path + ".new");
-    }
+    // This is a hack to wait for dispose to finish, because the onDispose plugin
+    // callback is not async so we cannot wait the promises running inside it.
+    await new Promise((resolve) => setTimeout(resolve, 10));
   });
 });

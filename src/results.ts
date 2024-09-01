@@ -137,6 +137,9 @@ function remove<T extends object>(object: T, key: keyof T) {
 }
 
 function cleanupJS(inPath: string, log?: (...args: unknown[]) => void) {
+  if (!fs.existsSync(inPath)) {
+    return;
+  }
   const stat = fs.statSync(inPath);
   const isJS = stat.isFile() && inPath.endsWith(".js");
   if (isJS) {

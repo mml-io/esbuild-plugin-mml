@@ -162,7 +162,6 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
 
         if (result.errors.length > 0) {
           log("build failed with errors:", result.errors);
-          await onEnd?.(result, importStubs);
           return;
         }
 

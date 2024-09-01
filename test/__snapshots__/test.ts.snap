@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/1 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///b.html";
@@ -11,107 +11,7 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html 1`] 
 </script>"
 `;
 
-exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html 2`] = `
-"<body></body><script>"use strict";
-(() => {
-  var b_default = "ws:///b.html";
-  var d_default = "ws:///c/d.html";
-  var c = "wat-" + d_default;
-  var e_default = "ws:///e.html";
-  console.log(b_default, d_default);
-  console.log(e_default);
-})();
-</script>"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html 1`] = `
-"<body></body><script>"use strict";
-(() => {
-  var d_default = "ws:///c/d.html";
-  var c = "wat-" + d_default;
-})();
-</script>"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html 2`] = `
-"<body></body><script>"use strict";
-(() => {
-  var d_default = "ws:///c/d.html";
-  var c = "wat-" + d_default;
-})();
-</script>"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html 1`] = `
-"<html>
-  <body>
-    <p>I'm html!</p>
-  </body>
-</html>
-"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html 2`] = `
-"<html>
-  <body>
-    <p>I'm html!</p>
-  </body>
-</html>
-"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html 1`] = `
-"<body></body><script>"use strict";
-(() => {
-  var e_default = "wat from e";
-})();
-</script>"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html 2`] = `
-"<body></body><script>"use strict";
-(() => {
-  var e_default = "wat from e";
-})();
-</script>"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json 1`] = `
-"{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
-    }
-  }
-}"
-`;
-
-exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json 2`] = `
-"{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
-    }
-  }
-}"
-`;
-
-exports[`context watch: generated/relative-outpath/context/watch/a.html 1`] = `
-"<body></body><script>"use strict";
-(() => {
-  var b_default = "ws:///b.html";
-  var d_default = "ws:///c/d.html";
-  var c = "wat-" + d_default;
-  console.log(b_default, d_default);
-})();
-</script>"
-`;
-
-exports[`context watch: generated/relative-outpath/context/watch/a.html.new 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/2 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///b.html";
@@ -124,7 +24,18 @@ exports[`context watch: generated/relative-outpath/context/watch/a.html.new 1`] 
 </script>"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/b.html 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/3 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/1 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var d_default = "ws:///c/d.html";
@@ -133,7 +44,7 @@ exports[`context watch: generated/relative-outpath/context/watch/b.html 1`] = `
 </script>"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/b.html.new 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/2 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var d_default = "ws:///c/d.html";
@@ -142,7 +53,16 @@ exports[`context watch: generated/relative-outpath/context/watch/b.html.new 1`] 
 </script>"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/c/d.html 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/3 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/1 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -151,7 +71,7 @@ exports[`context watch: generated/relative-outpath/context/watch/c/d.html 1`] = 
 "
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/c/d.html.new 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/2 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -160,7 +80,16 @@ exports[`context watch: generated/relative-outpath/context/watch/c/d.html.new 1`
 "
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/e.html 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/3 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html/2 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var e_default = "wat from e";
@@ -168,7 +97,7 @@ exports[`context watch: generated/relative-outpath/context/watch/e.html 1`] = `
 </script>"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/e.html.new 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html/3 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var e_default = "wat from e";
@@ -176,7 +105,7 @@ exports[`context watch: generated/relative-outpath/context/watch/e.html.new 1`] 
 </script>"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/world.json 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/1 1`] = `
 "{
   "default": {
     "mmlDocuments": {
@@ -188,7 +117,101 @@ exports[`context watch: generated/relative-outpath/context/watch/world.json 1`] 
 }"
 `;
 
-exports[`context watch: generated/relative-outpath/context/watch/world.json.new 1`] = `
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/2 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/3 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/a.html/1 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/a.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/b.html/1 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/b.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/c/d.html/1 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/c/d.html/2 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/world.json/1 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/world.json/2 1`] = `
 "{
   "default": {
     "mmlDocuments": {
@@ -423,16 +446,19 @@ exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/
 "
 `;
 
-exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.json 1`] = `
-"{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var a_default = "ws:///a.html";
+  var world_default = {
+    mmlDocuments: {
+      duck: {
+        url: a_default
       }
     }
-  }
-}"
+  };
+})();
+</script>"
 `;
 
 exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/a.html 1`] = `
@@ -609,23 +635,26 @@ exports[`mml plugin with relative outdir path world: generated/relative-outpath/
 "
 `;
 
-exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.json 1`] = `
-"{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var a_default = "ws:///a.html";
+  var world_default = {
+    mmlDocuments: {
+      duck: {
+        url: a_default
       }
     }
-  }
-}"
+  };
+})();
+</script>"
 `;
 
 exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/a.html 1`] = `
 "<body></body><script>"use strict";
 (() => {
-  var b_default = "mml:test/src/b.ts";
-  var d_default = "mml:test/src/c/d.html";
+  var b_default = "wss://b.html";
+  var d_default = "wss://c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
@@ -642,47 +671,6 @@ exports[`resultProcessor re-writes import paths for documents: generated/relativ
 `;
 
 exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/c/d.html 1`] = `
-"<html>
-  <body>
-    <p>I'm html!</p>
-  </body>
-</html>
-"
-`;
-
-exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/world.json 1`] = `
-"{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "wss://test/src/a.ts"
-      }
-    }
-  }
-}"
-`;
-
-exports[`resultProcessor re-writes import paths for worlds: generated/relative-outpath/result-processor/world/a.html 1`] = `
-"<body></body><script>"use strict";
-(() => {
-  var b_default = "wss://b.html";
-  var d_default = "wss://c/d.html";
-  var c = "wat-" + d_default;
-  console.log(b_default, d_default);
-})();
-</script>"
-`;
-
-exports[`resultProcessor re-writes import paths for worlds: generated/relative-outpath/result-processor/world/b.html 1`] = `
-"<body></body><script>"use strict";
-(() => {
-  var d_default = "wss://c/d.html";
-  var c = "wat-" + d_default;
-})();
-</script>"
-`;
-
-exports[`resultProcessor re-writes import paths for worlds: generated/relative-outpath/result-processor/world/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>

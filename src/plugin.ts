@@ -12,8 +12,6 @@ export type MaybePromise<T> = Promise<T> | T;
 
 export interface MMLPluginOptions {
   verbose?: boolean;
-  worlds?: string[];
-  documents?: string[];
   outputProcessor?: OutputProcessorProvider;
   importPrefix?: string;
 }
@@ -21,8 +19,6 @@ export interface MMLPluginOptions {
 export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
   const {
     verbose,
-    documents = [],
-    worlds = [],
     outputProcessor: outputProcessorProvider,
     importPrefix = "ws:///",
   } = args;
@@ -42,6 +38,22 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
       initialOptions.metafile = true;
       initialOptions.bundle = true;
       const outdir = (build.initialOptions.outdir ??= "build");
+
+      const [documents, worlds] = (
+        initialOptions.entryPoints as string[]
+      ).reduce<[string[], string[]]>(
+        ([documents, worlds], entryPoint) => {
+          if (entryPoint.startsWith("mml:")) {
+            documents.push(entryPoint.slice("mml:".length));
+          } else {
+            worlds.push(entryPoint);
+          }
+          return [documents, worlds];
+        },
+        [[], []],
+      );
+
+      initialOptions.entryPoints = [];
 
       const onResult = makeResultProcessor(
         outdir,
@@ -85,8 +97,10 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       build.onDispose(() => {
         log("onDispose");
-        void worldCtx.cancel().then(() => worldCtx.dispose());
-        void documentCtx.cancel().then(() => documentCtx.dispose());
+        void (async () => {
+          await worldCtx.dispose();
+          await documentCtx.dispose();
+        })();
       });
     },
   };
