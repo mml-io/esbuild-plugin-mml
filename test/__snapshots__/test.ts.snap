@@ -107,11 +107,9 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html/3 1`
 
 exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/1 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "ws:///a.html"
     }
   }
 }"
@@ -119,11 +117,9 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/
 
 exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/2 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "ws:///a.html"
     }
   }
 }"
@@ -131,11 +127,9 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/
 
 exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/3 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "ws:///a.html"
     }
   }
 }"
@@ -201,11 +195,9 @@ exports[`context watch: generated/relative-outpath/context/watch/c/d.html/2 1`] 
 
 exports[`context watch: generated/relative-outpath/context/watch/world.json/1 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "ws:///a.html"
     }
   }
 }"
@@ -213,11 +205,9 @@ exports[`context watch: generated/relative-outpath/context/watch/world.json/1 1`
 
 exports[`context watch: generated/relative-outpath/context/watch/world.json/2 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "ws:///a.html"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "ws:///a.html"
     }
   }
 }"
@@ -681,11 +671,9 @@ exports[`resultProcessor re-writes import paths for documents: generated/relativ
 
 exports[`resultProcessor re-writes import paths for worlds: generated/relative-outpath/result-processor/world/world.json 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "wss://test/src/a.ts"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "wss://test/src/a.ts"
     }
   }
 }"
@@ -728,11 +716,9 @@ var world_default = {
 
 exports[`worldContext creates world JSON: generated/relative-outpath/world-context/world.json 1`] = `
 "{
-  "default": {
-    "mmlDocuments": {
-      "duck": {
-        "url": "mml:test/src/a.ts"
-      }
+  "mmlDocuments": {
+    "duck": {
+      "url": "mml:test/src/a.ts"
     }
   }
 }"
