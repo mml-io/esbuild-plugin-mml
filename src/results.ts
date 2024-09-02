@@ -93,9 +93,6 @@ export const makeResultProcessor = (
       }
 
       log("New stubs", combinedStubs);
-      if (outputProcessor.onEnd) {
-        return outputProcessor.onEnd(outdir, combinedResult);
-      }
     } else {
       for (const [output, meta] of Object.entries(outputs)) {
         const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
@@ -106,7 +103,7 @@ export const makeResultProcessor = (
 
         const newImport = path.relative(outdir, output);
 
-        if (newImport !== meta.entryPoint) {
+        if (newImport !== entryPoint) {
           combinedStubs[newImport] = combinedStubs[entryPoint];
           remove(combinedStubs, entryPoint);
         }
@@ -133,6 +130,10 @@ export const makeResultProcessor = (
         await fsp.writeFile(output, contents);
       }),
     );
+
+    if (outputProcessor?.onEnd) {
+      return outputProcessor.onEnd(outdir, combinedResult);
+    }
   };
 };
 
