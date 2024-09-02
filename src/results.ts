@@ -63,10 +63,6 @@ export const makeResultProcessor = (
 
     if (outputProcessor) {
       for (const [output, meta] of Object.entries(outputs)) {
-        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
-        if (!combinedStubs[entryPoint]) {
-          continue;
-        }
         const relPath = path.relative(outdir, output);
         const result = await outputProcessor.onOutput(relPath);
         if (!result) {
@@ -74,13 +70,6 @@ export const makeResultProcessor = (
         }
         const { path: newPath = relPath, importStr: newImport = newPath } =
           result;
-        log("Output processor result", {
-          entryPoint,
-          result,
-          newPath,
-          newImport,
-          combinedStubs,
-        });
         if (newPath !== relPath) {
           const newOutput = path.join(outdir, newPath);
           log("Renaming:", relPath, "->", newPath);
@@ -89,10 +78,18 @@ export const makeResultProcessor = (
           outputs[newOutput] = meta;
           remove(outputs, output);
         }
-        if (newImport !== meta.entryPoint) {
+        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+        if (combinedStubs[entryPoint] && newImport !== entryPoint) {
           combinedStubs[newImport] = combinedStubs[entryPoint];
           remove(combinedStubs, entryPoint);
         }
+        log("Output processor result", {
+          entryPoint,
+          result,
+          newPath,
+          newImport,
+          combinedStubs,
+        });
       }
 
       log("New stubs", combinedStubs);
