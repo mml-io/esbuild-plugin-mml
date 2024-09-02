@@ -17,7 +17,7 @@ await esbuild.build({
   logLevel: "info",
   format: "esm",
   bundle: true,
-  minify: true,
+  external: ["esbuild"],
 });
 
 await esbuild.build({
@@ -28,5 +28,5 @@ await esbuild.build({
   logLevel: "info",
   format: "cjs",
   bundle: true,
-  minify: true,
+  external: ["esbuild"],
 });

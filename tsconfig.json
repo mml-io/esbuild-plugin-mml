@@ -1,6 +1,12 @@
 {
-  "include": ["./src", "./test"],
-  "exclude": ["./test/generated", "./dist"],
+  "include": [
+    "./src",
+    "./test"
+  ],
+  "exclude": [
+    "./test/generated",
+    "./dist"
+  ],
   "compilerOptions": {
     "moduleResolution": "bundler",
     "module": "esnext",
@@ -11,7 +17,9 @@
     "skipLibCheck": true,
     "noEmit": true,
     "paths": {
-      "@mml-io/esbuild-plugin-mml": ["./src/index.ts"]
+      "@mml-io/esbuild-plugin-mml": [
+        "./src/index.ts"
+      ]
     }
   }
 }

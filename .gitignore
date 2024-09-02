@@ -29,11 +29,11 @@ Temporary Items
 
 # Node
 node_modules
-package-lock.json
 
 # Generated files
 dist
 test/generated
+test/scratch
 *.log
 *.tmp
 

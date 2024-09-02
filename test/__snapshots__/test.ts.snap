@@ -1,26 +1,298 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/a.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/1 1`] = `
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///b.html";
-  var d_default = "ws:///d.html";
+  var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  var e_default = "ws:///e.html";
+  console.log(b_default, d_default);
+  console.log(e_default);
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/3 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/1 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/b.html/3 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/1 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/2 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/c/d.html/3 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var e_default = "wat from e";
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/e.html/3 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var e_default = "wat from e";
+})();
+</script>"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/1 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/2 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context rebuild: generated/relative-outpath/context/rebuild/world.json/3 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/a.html/1 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/a.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/b.html/1 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/b.html/2 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/c/d.html/1 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/c/d.html/2 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/world.json/1 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`context watch: generated/relative-outpath/context/watch/world.json/2 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`documentContext creates MML HTML documents: generated/relative-outpath/document-context/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "mml:test/src/b.ts";
+  var d_default = "mml:test/src/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`documentContext creates MML HTML documents: generated/relative-outpath/document-context/a.js 1`] = `
+""use strict";
+(() => {
+  var b_default = "mml:test/src/b.ts";
+  var d_default = "mml:test/src/c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+"
+`;
+
+exports[`documentContext creates MML HTML documents: generated/relative-outpath/document-context/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "mml:test/src/c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`documentContext creates MML HTML documents: generated/relative-outpath/document-context/b.js 1`] = `
+""use strict";
+(() => {
+  var d_default = "mml:test/src/c/d.html";
+  var c = "wat-" + d_default;
+})();
+"
+`;
+
+exports[`documentContext creates MML HTML documents: generated/relative-outpath/document-context/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
 `;
 
 exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///d.html";
+  var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with default options: generated/absolute-outpath/default-options/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -30,26 +302,26 @@ exports[`mml plugin with absolute outdir path with default options: generated/ab
 `;
 
 exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/a.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
   var b_default = "foo/b.html";
-  var d_default = "foo/d.html";
+  var d_default = "foo/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
 exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "foo/d.html";
+  var d_default = "foo/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with import prefix: generated/absolute-outpath/import-prefix/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -58,27 +330,27 @@ exports[`mml plugin with absolute outdir path with import prefix: generated/abso
 "
 `;
 
-exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/a.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/flump/flump/a.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///blump/b.html";
-  var d_default = "ws:///blump/d.html";
+  var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/b.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/flump/flump/b.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///blump/d.html";
+  var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/flump/flump/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -88,26 +360,26 @@ exports[`mml plugin with absolute outdir path with new import and path from outp
 `;
 
 exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/a.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///quux/b.html";
-  var d_default = "ws:///quux/d.html";
+  var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
 exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///quux/d.html";
+  var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -116,56 +388,100 @@ exports[`mml plugin with absolute outdir path with new import from output proces
 "
 `;
 
-exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/a.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/bar/bar/a.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///bar/b.html";
-  var d_default = "ws:///bar/d.html";
+  var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/b.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/bar/bar/b.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///bar/d.html";
+  var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/d.html 1`] = `
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/bar/bar/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
   </body>
 </html>
 "
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/world.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var a_default = "ws:///a.html";
+  var world_default = {
+    mmlDocuments: {
+      duck: {
+        url: a_default
+      }
+    }
+  };
+})();
+</script>"
 `;
 
 exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/a.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///b.html";
-  var d_default = "ws:///d.html";
+  var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
 exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///d.html";
+  var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/d.html 1`] = `
+exports[`mml plugin with relative outdir path with default options: generated/relative-outpath/default-options/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -175,26 +491,26 @@ exports[`mml plugin with relative outdir path with default options: generated/re
 `;
 
 exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/a.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
   var b_default = "foo/b.html";
-  var d_default = "foo/d.html";
+  var d_default = "foo/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
 exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "foo/d.html";
+  var d_default = "foo/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/d.html 1`] = `
+exports[`mml plugin with relative outdir path with import prefix: generated/relative-outpath/import-prefix/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -203,27 +519,27 @@ exports[`mml plugin with relative outdir path with import prefix: generated/rela
 "
 `;
 
-exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/a.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/flump/flump/a.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///blump/b.html";
-  var d_default = "ws:///blump/d.html";
+  var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/b.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/flump/flump/b.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///blump/d.html";
+  var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/d.html 1`] = `
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/flump/flump/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -233,26 +549,26 @@ exports[`mml plugin with relative outdir path with new import and path from outp
 `;
 
 exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/a.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///quux/b.html";
-  var d_default = "ws:///quux/d.html";
+  var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
 exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/b.html 1`] = `
-"< body > </body><script>"use strict";
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///quux/d.html";
+  var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/d.html 1`] = `
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
@@ -261,31 +577,163 @@ exports[`mml plugin with relative outdir path with new import from output proces
 "
 `;
 
-exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/a.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/bar/bar/a.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///bar/b.html";
-  var d_default = "ws:///bar/d.html";
+  var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
   console.log(b_default, d_default);
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/b.html 1`] = `
-"< body > </body><script>"use strict";
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/bar/bar/b.html 1`] = `
+"<body></body><script>"use strict";
 (() => {
-  var d_default = "ws:///bar/d.html";
+  var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
 })();
-</script > "
+</script>"
 `;
 
-exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/d.html 1`] = `
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/bar/bar/c/d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>
   </body>
 </html>
 "
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "ws:///b.html";
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "ws:///c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/world.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var a_default = "ws:///a.html";
+  var world_default = {
+    mmlDocuments: {
+      duck: {
+        url: a_default
+      }
+    }
+  };
+})();
+</script>"
+`;
+
+exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/a.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var b_default = "wss://b.html";
+  var d_default = "wss://c/d.html";
+  var c = "wat-" + d_default;
+  console.log(b_default, d_default);
+})();
+</script>"
+`;
+
+exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/b.html 1`] = `
+"<body></body><script>"use strict";
+(() => {
+  var d_default = "wss://c/d.html";
+  var c = "wat-" + d_default;
+})();
+</script>"
+`;
+
+exports[`resultProcessor re-writes import paths for documents: generated/relative-outpath/result-processor/world/c/d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`resultProcessor re-writes import paths for worlds: generated/relative-outpath/result-processor/world/world.json 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "wss://test/src/a.ts"
+      }
+    }
+  }
+}"
+`;
+
+exports[`worldContext creates world JSON: generated/relative-outpath/world-context/world.js 1`] = `
+""use strict";
+var __defProp = Object.defineProperty;
+var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+var __getOwnPropNames = Object.getOwnPropertyNames;
+var __hasOwnProp = Object.prototype.hasOwnProperty;
+var __export = (target, all) => {
+  for (var name in all)
+    __defProp(target, name, { get: all[name], enumerable: true });
+};
+var __copyProps = (to, from, except, desc) => {
+  if (from && typeof from === "object" || typeof from === "function") {
+    for (let key of __getOwnPropNames(from))
+      if (!__hasOwnProp.call(to, key) && key !== except)
+        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+  }
+  return to;
+};
+var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+var world_exports = {};
+__export(world_exports, {
+  default: () => world_default
+});
+module.exports = __toCommonJS(world_exports);
+var a_default = "mml:test/src/a.ts";
+var world_default = {
+  mmlDocuments: {
+    duck: {
+      url: a_default
+    }
+  }
+};
+"
+`;
+
+exports[`worldContext creates world JSON: generated/relative-outpath/world-context/world.json 1`] = `
+"{
+  "default": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "mml:test/src/a.ts"
+      }
+    }
+  }
+}"
 `;
