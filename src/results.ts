@@ -64,6 +64,9 @@ export const makeResultProcessor = (
     if (outputProcessor) {
       for (const [output, meta] of Object.entries(outputs)) {
         const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+        if (!combinedStubs[entryPoint]) {
+          continue;
+        }
         const relPath = path.relative(outdir, output);
         const result = await outputProcessor.onOutput(relPath);
         if (!result) {
@@ -99,6 +102,11 @@ export const makeResultProcessor = (
     } else {
       for (const [output, meta] of Object.entries(outputs)) {
         const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+
+        if (!combinedStubs[entryPoint]) {
+          continue;
+        }
+
         const newImport = path.relative(outdir, output);
 
         if (newImport !== meta.entryPoint) {
