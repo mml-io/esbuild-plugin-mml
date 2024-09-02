@@ -35,6 +35,6 @@ jobs:
           # Set up npm auth token from secret for publishing
           npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
 
-          npm publish --tag latest --dry-run
+          npm publish --tag latest --access public
         env:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
