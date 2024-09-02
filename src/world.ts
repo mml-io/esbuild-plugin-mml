@@ -4,6 +4,7 @@ import util from "node:util";
 import fsp from "node:fs/promises";
 import { noop } from "es-toolkit";
 import assert from "node:assert";
+import { MMLWorldConfig } from "./world-config";
 
 export interface WorldContextOptions {
   worlds: string[];
@@ -104,8 +105,9 @@ export async function worldContext({
             for (const [jsPath, meta] of Object.entries(outputs)) {
               if (!meta.entryPoint) continue;
               const jsonPath = jsPath.replace(jsExt, ".json");
-              // eslint-disable-next-line @typescript-eslint/no-require-imports
-              const js = require(path.resolve(jsPath)) as object;
+              const { default: js } = (await import(path.resolve(jsPath))) as {
+                default: MMLWorldConfig;
+              };
               const json = JSON.stringify(js, null, 2);
               log("writing JSON file:", jsonPath);
               await fsp.writeFile(jsonPath, json);
