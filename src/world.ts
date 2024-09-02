@@ -104,7 +104,8 @@ export async function worldContext({
             for (const [jsPath, meta] of Object.entries(outputs)) {
               if (!meta.entryPoint) continue;
               const jsonPath = jsPath.replace(jsExt, ".json");
-              const js = (await import(path.resolve(jsPath))) as object;
+              // eslint-disable-next-line @typescript-eslint/no-require-imports
+              const js = require(path.resolve(jsPath)) as object;
               const json = JSON.stringify(js, null, 2);
               log("writing JSON file:", jsonPath);
               await fsp.writeFile(jsonPath, json);
