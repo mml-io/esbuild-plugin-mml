@@ -63,7 +63,6 @@ export async function documentContext({
       if (!eq(newWorldDocuments, worldDocuments)) {
         worldDocuments = newWorldDocuments;
         importStubs = newImportStubs;
-        await ctx.cancel();
         await ctx.dispose();
         ctx = await build.context({
           ...options,
