@@ -1,0 +1,31 @@
+---
+name: Retrieve Dependencies and Build Artifacts
+description: Retrieve cached NPM Install Dependencies and NPM Run Build Artifacts
+
+runs:
+  using: "composite"
+  steps:
+    - name: Download build artifacts
+      uses: actions/download-artifact@v4
+      with:
+        name: dist
+
+    - name: Set up nodejs
+      uses: actions/setup-node@v4
+      with:
+        cache: npm
+        node-version: 20
+
+    - name: Cache NPM dependencies
+      uses: actions/cache@v4
+      with:
+        path: |
+          node_modules
+          ~/.cache
+        key: ${{ runner.os }}-npm-v3-${{ hashFiles('package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-v3-
+
+    - name: Install dependencies
+      if: steps.cache-npm-deps.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm i

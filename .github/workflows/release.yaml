@@ -1,0 +1,40 @@
+name: Release
+
+permissions:
+  id-token: write
+  contents: write
+  pull-requests: write
+  checks: write
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish-release-packages:
+    name: Publish Packages
+    environment: package-release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: "Retrieve Dependencies and Build Artifacts"
+        id: retrieve-deps-and-build
+        uses: ./.github/actions/retrieve-deps-and-build
+
+      - name: Publish
+        run: |
+          # Set up git user for lerna to create a local commit with
+          git config --global user.email "github-ci@mml.io"
+          git config --global user.name "github-ci-mml"
+
+          # Set up npm auth token from secret for publishing
+          npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
+
+          npm publish --tag latest --access public
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
