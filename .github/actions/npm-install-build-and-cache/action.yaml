@@ -1,0 +1,44 @@
+---
+name: NPM Install, Build, and Cache
+description: |
+  NPM Install Dependencies, NPM Run Build, and Cache Dependencies & Artifacts
+
+outputs:
+  npm-deps-cache-hit:
+    description: "Whether or not the npm dependencies are cached"
+    value: ${{ steps.cache-npm-deps.outputs.cache-hit }}
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up nodejs
+      uses: actions/setup-node@v4
+      with:
+        cache: npm
+        node-version: 20
+
+    - name: Cache NPM dependencies
+      uses: actions/cache@v4
+      id: cache-npm-deps
+      with:
+        path: |
+          node_modules
+          ~/.cache
+        key: ${{ runner.os }}-npm-v3-${{ hashFiles('package-lock.json') }}
+        restore-keys: ${{ runner.os }}-npm-v3-
+
+    - name: Install dependencies
+      if: steps.cache-npm-deps.outputs.cache-hit != 'true'
+      shell: bash
+      run: npm ci
+
+    - name: Build
+      shell: bash
+      run: npm run build
+
+    - name: Upload built artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: ./dist
+        if-no-files-found: error
