@@ -1,7 +1,8 @@
 # @mml-io/esbuild-plugin-mml
 
-[![CI](https://badgen.net/github/checks/mml-io/esbuild-plugin-mml/main)](https://github.com/mml-io/esbuild-plugin-mml/actions)
-[![Version](https://badgen.net/npm/v/esbuild-plugin-mml)](https://www.npmjs.com/package/@mml-io/esbuild-plugin-mml)
+[![main github actions](https://github.com/mml-io/esbuild-plugin-mml/actions/workflows/main.yaml/badge.svg)](https://github.com/mml-io/esbuild-plugin-mml/actions/workflows/main.yaml)
+[![npm version](https://img.shields.io/npm/v/%40mml-io%2Fesbuild-plugin-mml?style=flat)](https://www.npmjs.com/package/@mml-io/esbuild-plugin-mml)
+![GitHub top language](https://img.shields.io/github/languages/top/mml-io/esbuild-plugin-mml) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mml-io/esbuild-plugin-mml/blob/main/LICENSE)
 
 An [esbuild](https://esbuild.github.io/) plugin that bundles JavaScript/React
 sources into an HTML document that can be run as an MML document. It also
