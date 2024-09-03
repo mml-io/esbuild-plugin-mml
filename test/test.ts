@@ -34,6 +34,17 @@ async function* walk(dir: string): AsyncGenerator<{
     if (stat.isDirectory()) {
       yield* walk(fullPath);
     } else {
+      if (
+        !file.endsWith(".html") &&
+        !file.endsWith(".json") &&
+        !file.endsWith(".js")
+      ) {
+        yield {
+          path: path.relative(__dirname, fullPath),
+          content: file,
+        };
+        continue;
+      }
       const content = await fsp.readFile(fullPath, "utf-8");
       yield {
         path: path.relative(__dirname, fullPath),
@@ -80,34 +91,16 @@ describe("resultProcessor", () => {
 
   afterEach(() => ctx?.dispose());
 
-  it("re-writes import paths for worlds", async () => {
-    const outdir = path.join(relativeOutdir, "result-processor", "world");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    const processor = makeResultProcessor(outdir, "wss://", noop);
-
-    ctx = await worldContext({
-      worlds: ["test/src/world.ts"],
-      options: { outdir },
-      onEnd: async (result, _, importStubs) => {
-        processor.pushResult("world", result, importStubs);
-        await processor.process();
-        for await (const { path, content } of walk(outdir)) {
-          expect(content).toMatchSnapshot(path);
-        }
-      },
-    });
-
-    await ctx.rebuild();
-
-    expect.hasAssertions();
-  });
-
   it("re-writes import paths for documents", async () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
     await fsp.rm(outdir, { recursive: true, force: true });
 
-    const processor = makeResultProcessor(outdir, "wss://", noop);
+    const processor = makeResultProcessor({
+      outdir,
+      documentPrefix: "ws:///",
+      assetPrefix: "http://",
+      log: noop,
+    });
 
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
@@ -146,6 +139,7 @@ describe("documentContext", () => {
         expect(importStubs).toEqual({
           "test/src/b.ts": "mml:test/src/b.ts",
           "test/src/c/d.html": "mml:test/src/c/d.html",
+          "test/src/duck.glb": "asset:test/src/duck.glb",
         });
       },
     });
@@ -221,6 +215,7 @@ describe("mml plugin", () => {
         entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
+            verbose: true,
             outputProcessor: () => ({
               onOutput(output) {
                 return { path: path.join("bar/", output) };

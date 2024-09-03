@@ -13,6 +13,8 @@ export type MaybePromise<T> = Promise<T> | T;
 export interface MMLPluginOptions {
   verbose?: boolean;
   outputProcessor?: OutputProcessorProvider;
+  documentPrefix?: string;
+  assetPrefix?: string;
   importPrefix?: string;
 }
 
@@ -20,13 +22,23 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
   const {
     verbose,
     outputProcessor: outputProcessorProvider,
-    importPrefix = "ws:///",
+    importPrefix,
+    assetPrefix = "",
   } = args;
+  let { documentPrefix = "ws:///" } = args;
+
   const log = verbose
     ? (...args: unknown[]) => {
         console.log("[mml]:", ...args);
       }
     : noop;
+
+  if (importPrefix) {
+    log("importPrefix is deprecated, use documentPrefix instead");
+    if (!documentPrefix) {
+      documentPrefix = importPrefix;
+    }
+  }
 
   return {
     name: "mml",
@@ -55,12 +67,13 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       initialOptions.entryPoints = [];
 
-      const processor = makeResultProcessor(
+      const processor = makeResultProcessor({
         outdir,
-        importPrefix,
+        documentPrefix,
+        assetPrefix,
         log,
-        outputProcessorProvider?.(log),
-      );
+        outputProcessor: outputProcessorProvider?.(log),
+      });
 
       const documentCtx = await documentContext({
         build: build.esbuild,

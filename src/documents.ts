@@ -1,5 +1,5 @@
 import esbuild from "esbuild";
-import path from "node:path";
+import path, { basename } from "node:path";
 import util from "node:util";
 import fsp from "node:fs/promises";
 
@@ -99,6 +99,15 @@ export async function documentContext({
   };
 }
 
+const nonAssetExtensions = new Set([
+  ".html",
+  ".css",
+  ".js",
+  ".ts",
+  ".jsx",
+  ".tsx",
+]);
+
 export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
   const { verbose, importStubs, onEnd } = args;
   const log = verbose
@@ -113,8 +122,16 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
       build.initialOptions.metafile ??= true;
       build.initialOptions.bundle ??= true;
       (build.initialOptions.loader ??= {})[".html"] = "copy";
+      const outdir = (build.initialOptions.outdir ??= "build");
 
       const discoveredDocuments = new Set<string>();
+      const assets: { output: string; entrypoint: string }[] = [];
+
+      build.onStart(() => {
+        log("onStart");
+        discoveredDocuments.clear();
+        assets.length = 0;
+      });
 
       build.onResolve({ filter: /mml:/ }, async (args) => {
         log("onResolve(/mml:/)", args);
@@ -139,6 +156,49 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
           watchFiles: [resolved.path],
         };
       });
+
+      build.onResolve({ filter: /\.[^./]+$/ }, (args) => {
+        if (nonAssetExtensions.has(path.extname(args.path))) return;
+
+        log("onResolve: asset", args);
+
+        const resolved = path.resolve(args.resolveDir, args.path);
+        const relpath = path.relative(process.cwd(), resolved);
+        importStubs[relpath] = `asset:${relpath}`;
+
+        return {
+          path: resolved,
+          namespace: "asset",
+          watchFiles: [args.path],
+        };
+      });
+
+      build.onLoad(
+        { filter: /.*/, namespace: "asset" },
+        async (args: esbuild.OnLoadArgs) => {
+          log("onLoad: asset", {
+            ...args,
+            importStubs,
+            cwd: process.cwd(),
+          });
+
+          // TODO: add this to the metafile
+          const output = path.resolve(outdir, basename(args.path));
+          const entrypoint = path.relative(process.cwd(), args.path);
+
+          assets.push({ output, entrypoint });
+
+          await fsp.mkdir(path.dirname(output), { recursive: true });
+          await fsp.copyFile(args.path, output);
+
+          const contents = importStubs[entrypoint];
+
+          return {
+            contents,
+            loader: "text",
+          };
+        },
+      );
 
       build.onLoad(
         { filter: /.*/, namespace: "mml" },
@@ -179,6 +239,17 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
 
         // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         const outputs = result.metafile!.outputs;
+
+        for (const asset of assets) {
+          const stats = await fsp.stat(asset.output);
+          outputs[asset.output] = {
+            entryPoint: asset.entrypoint,
+            bytes: stats.size,
+            inputs: {},
+            imports: [],
+            exports: [],
+          };
+        }
 
         for (const [jsPath, meta] of Object.entries(outputs)) {
           if (!meta.entryPoint || !jsPath.endsWith(".js")) continue;

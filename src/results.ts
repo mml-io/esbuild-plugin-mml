@@ -28,12 +28,22 @@ interface MetaResult {
   result: esbuild.BuildResult<{ metafile: true }>;
 }
 
-export const makeResultProcessor = (
-  outdir: string,
-  importPrefix: string,
-  log: typeof console.log,
-  outputProcessor?: OutputProcessor,
-) => {
+interface MakeResultProcessorOptions {
+  outdir: string;
+  documentPrefix: string;
+  assetPrefix: string;
+  log: typeof console.log;
+  outputProcessor?: OutputProcessor;
+}
+
+// TODO: make this return two functions, ont for onResult and one for onEnd
+export const makeResultProcessor = ({
+  outdir,
+  documentPrefix,
+  assetPrefix,
+  log,
+  outputProcessor,
+}: MakeResultProcessorOptions) => {
   const metaResults = new Map<string, MetaResult>();
 
   return {
@@ -122,7 +132,12 @@ export const makeResultProcessor = (
         Object.keys(outputs).map(async (output) => {
           let contents = await fsp.readFile(output, { encoding: "utf8" });
           for (const [file, stub] of Object.entries(combinedStubs)) {
-            const replacement = importPrefix + file;
+            if (!stub.startsWith("mml:") && !stub.startsWith("asset:")) {
+              continue;
+            }
+            const replacement = stub.startsWith("mml")
+              ? documentPrefix + file
+              : assetPrefix + file;
             log("Replacing import stub:", {
               stub,
               replacement,
