@@ -67,7 +67,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
         documents,
         options: initialOptions,
         onEnd: async (result, importStubs) => {
-          await onResult("document", result, importStubs);
+          await onResult("document", result, importStubs, false);
         },
         verbose,
       });
@@ -89,10 +89,6 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
       build.onStart(async () => {
         log("onStart");
         await worldCtx.rebuild();
-      });
-
-      build.onEnd(async (result) => {
-        await onResult("root", result, {});
       });
 
       build.onDispose(() => {

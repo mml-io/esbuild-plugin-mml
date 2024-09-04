@@ -40,6 +40,7 @@ export const makeResultProcessor = (
     key: string,
     result: esbuild.BuildResult,
     importStubs: Record<string, string>,
+    process = true,
   ) => {
     log("new result", util.inspect({ key, importStubs, result }, { depth: 5 }));
 
@@ -50,12 +51,16 @@ export const makeResultProcessor = (
 
     metaResults.set(key, { importStubs, result });
 
+    if (!process) {
+      return;
+    }
+
     const combinedResult = {} as esbuild.BuildResult;
     const combinedStubs = {} as Record<string, string>;
 
     for (const [, { importStubs, result }] of metaResults) {
-      merge(combinedResult, result);
-      merge(combinedStubs, importStubs);
+      merge(combinedResult, structuredClone(result));
+      merge(combinedStubs, structuredClone(importStubs));
     }
 
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
