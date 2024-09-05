@@ -6,6 +6,7 @@ import fsp from "node:fs/promises";
 export interface DocumentPluginOptions {
   importStubs: Record<string, string>;
   verbose?: boolean;
+  assetDir: string;
   onEnd?: (
     result: esbuild.BuildResult,
     importStubs: Record<string, string>,
@@ -23,6 +24,7 @@ export interface DocumentContextOptions {
   documents: string[];
   build?: esbuild.PluginBuild["esbuild"];
   worldDocuments?: Set<string>;
+  assetDir: string;
   verbose?: boolean;
   onEnd?: (
     result: esbuild.BuildResult,
@@ -36,6 +38,7 @@ export async function documentContext({
   options,
   worldDocuments = new Set<string>(),
   verbose,
+  assetDir,
   onEnd,
   build = esbuild,
 }: DocumentContextOptions): Promise<DocumentContext> {
@@ -46,6 +49,7 @@ export async function documentContext({
     format: "iife",
     plugins: [
       documentPlugin({
+        assetDir,
         importStubs,
         verbose,
         onEnd,
@@ -70,6 +74,7 @@ export async function documentContext({
           format: "iife",
           plugins: [
             documentPlugin({
+              assetDir,
               importStubs,
               verbose,
               onEnd,
@@ -109,7 +114,7 @@ const nonAssetExtensions = new Set([
 ]);
 
 export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
-  const { verbose, importStubs, onEnd } = args;
+  const { verbose, importStubs, assetDir, onEnd } = args;
   const log = verbose
     ? (...args: unknown[]) => {
         console.log("[mml-world]:", ...args);
@@ -182,8 +187,7 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
             cwd: process.cwd(),
           });
 
-          // TODO: add this to the metafile
-          const output = path.resolve(outdir, basename(args.path));
+          const output = path.resolve(outdir, assetDir, basename(args.path));
           const entrypoint = path.relative(process.cwd(), args.path);
 
           assets.push({ output, entrypoint });
@@ -231,7 +235,9 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
               ...((build.initialOptions.entryPoints ?? []) as string[]),
               ...discoveredDocuments,
             ],
-            plugins: [documentPlugin({ importStubs, verbose, onEnd })],
+            plugins: [
+              documentPlugin({ importStubs, verbose, assetDir, onEnd }),
+            ],
           });
 
           return;

@@ -15,6 +15,7 @@ export interface MMLPluginOptions {
   outputProcessor?: OutputProcessorProvider;
   documentPrefix?: string;
   assetPrefix?: string;
+  assetDir?: string;
   importPrefix?: string;
 }
 
@@ -24,6 +25,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
     outputProcessor: outputProcessorProvider,
     importPrefix,
     assetPrefix = "",
+    assetDir = "assets",
   } = args;
   let { documentPrefix = "ws:///" } = args;
 
@@ -78,6 +80,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
       const documentCtx = await documentContext({
         build: build.esbuild,
         documents,
+        assetDir,
         options: initialOptions,
         onEnd: async (result, importStubs) => {
           processor.pushResult("document", result, importStubs);

@@ -105,6 +105,7 @@ describe("resultProcessor", () => {
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
+      assetDir: "assets",
       onEnd: async (result, importStubs) => {
         processor.pushResult("document", result, importStubs);
         await processor.process();
@@ -132,6 +133,7 @@ describe("documentContext", () => {
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
+      assetDir: "assets",
       onEnd: async (_result, importStubs) => {
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
@@ -215,7 +217,6 @@ describe("mml plugin", () => {
         entryPoints: ["mml:test/src/a.ts"],
         plugins: [
           mml({
-            verbose: true,
             outputProcessor: () => ({
               onOutput(output) {
                 return { path: path.join("bar/", output) };
