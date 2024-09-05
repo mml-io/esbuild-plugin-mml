@@ -36,7 +36,7 @@ export async function worldContext({
   const ctx = await build.context({
     ...options,
     entryPoints: worlds,
-    format: "esm",
+    format: "cjs",
     bundle: true,
     metafile: true,
     plugins: [

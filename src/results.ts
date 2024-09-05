@@ -63,6 +63,11 @@ export const makeResultProcessor = (
         merge(combinedStubs, structuredClone(importStubs));
       }
 
+      if (combinedResult.errors.length > 0) {
+        log("build failed with errors", combinedResult.errors);
+        return;
+      }
+
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const outputs = combinedResult.metafile!.outputs;
 
