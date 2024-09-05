@@ -85,16 +85,10 @@ export const makeResultProcessor = (
           }
           const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
           if (combinedStubs[entryPoint] && newImport !== entryPoint) {
+            log("Replacing import stub:", { entryPoint, newImport });
             combinedStubs[newImport] = combinedStubs[entryPoint];
             remove(combinedStubs, entryPoint);
           }
-          log("Output processor result", {
-            entryPoint,
-            result,
-            newPath,
-            newImport,
-            combinedStubs,
-          });
         }
 
         log("New stubs", combinedStubs);
@@ -128,7 +122,6 @@ export const makeResultProcessor = (
               stub,
               replacement,
               output,
-              contents,
             });
             contents = contents.replaceAll(stub, replacement);
           }
