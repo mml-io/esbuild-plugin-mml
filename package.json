@@ -14,7 +14,8 @@
       "types": "./dist/types/index.d.ts",
       "import": "./dist/index.cjs",
       "require": "./dist/index.js"
-    }
+    },
+    "./package.json": "./package.json"
   },
   "keywords": [
     "esbuild",

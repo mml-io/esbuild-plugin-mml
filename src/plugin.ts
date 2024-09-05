@@ -55,7 +55,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       initialOptions.entryPoints = [];
 
-      const onResult = makeResultProcessor(
+      const processor = makeResultProcessor(
         outdir,
         importPrefix,
         log,
@@ -67,7 +67,8 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
         documents,
         options: initialOptions,
         onEnd: async (result, importStubs) => {
-          await onResult("document", result, importStubs, false);
+          processor.pushResult("document", result, importStubs);
+          await processor.process();
         },
         verbose,
       });
@@ -76,11 +77,14 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
         build: build.esbuild,
         worlds,
         onEnd: async (result, discoveredDocuments, importStubs) => {
+          processor.pushResult("world", result, importStubs);
+          if (discoveredDocuments.size === 0) {
+            return;
+          }
           await documentCtx.rebuildWithDocuments(
             discoveredDocuments,
             importStubs,
           );
-          await onResult("world", result, importStubs);
         },
         options: initialOptions,
         verbose,
@@ -88,7 +92,11 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       build.onStart(async () => {
         log("onStart");
-        await worldCtx.rebuild();
+        if (worlds.length > 0) {
+          await worldCtx.rebuild();
+        } else {
+          await documentCtx.rebuild();
+        }
       });
 
       build.onDispose(() => {

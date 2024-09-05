@@ -84,13 +84,14 @@ describe("resultProcessor", () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
     await fsp.rm(outdir, { recursive: true, force: true });
 
-    const onEnd = makeResultProcessor(outdir, "wss://", noop);
+    const processor = makeResultProcessor(outdir, "wss://", noop);
 
     ctx = await worldContext({
       worlds: ["test/src/world.ts"],
       options: { outdir },
       onEnd: async (result, _, importStubs) => {
-        await onEnd("world", result, importStubs);
+        processor.pushResult("world", result, importStubs);
+        await processor.process();
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
         }
@@ -106,13 +107,14 @@ describe("resultProcessor", () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
     await fsp.rm(outdir, { recursive: true, force: true });
 
-    const onEnd = makeResultProcessor(outdir, "wss://", noop);
+    const processor = makeResultProcessor(outdir, "wss://", noop);
 
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
       onEnd: async (result, importStubs) => {
-        await onEnd("document", result, importStubs);
+        processor.pushResult("document", result, importStubs);
+        await processor.process();
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
         }
@@ -229,6 +231,9 @@ describe("mml plugin", () => {
       };
 
       await esbuild.build(config);
+      // This is a hack to wait for dispose to finish, because the onDispose plugin
+      // callback is not async so we cannot wait the promises running inside it.
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -384,6 +389,6 @@ describe("context", () => {
 
     // This is a hack to wait for dispose to finish, because the onDispose plugin
     // callback is not async so we cannot wait the promises running inside it.
-    await new Promise((resolve) => setTimeout(resolve, 10));
+    await new Promise((resolve) => setTimeout(resolve, 20));
   });
 });

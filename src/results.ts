@@ -36,109 +36,110 @@ export const makeResultProcessor = (
 ) => {
   const metaResults = new Map<string, MetaResult>();
 
-  return async (
-    key: string,
-    result: esbuild.BuildResult,
-    importStubs: Record<string, string>,
-    process = true,
-  ) => {
-    log("new result", util.inspect({ key, importStubs, result }, { depth: 5 }));
+  return {
+    pushResult(
+      key: string,
+      result: esbuild.BuildResult,
+      importStubs: Record<string, string>,
+    ) {
+      log(
+        "new result",
+        util.inspect({ key, importStubs, result }, { depth: 5 }),
+      );
 
-    if (result.errors.length > 0) {
-      log("build failed with errors", result.errors);
-      return;
-    }
-
-    metaResults.set(key, { importStubs, result });
-
-    if (!process) {
-      return;
-    }
-
-    const combinedResult = {} as esbuild.BuildResult;
-    const combinedStubs = {} as Record<string, string>;
-
-    for (const [, { importStubs, result }] of metaResults) {
-      merge(combinedResult, structuredClone(result));
-      merge(combinedStubs, structuredClone(importStubs));
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const outputs = combinedResult.metafile!.outputs;
-
-    if (outputProcessor) {
-      for (const [output, meta] of Object.entries(outputs)) {
-        const relPath = path.relative(outdir, output);
-        const result = await outputProcessor.onOutput(relPath);
-        if (!result) {
-          continue;
-        }
-        const { path: newPath = relPath, importStr: newImport = newPath } =
-          result;
-        if (newPath !== relPath) {
-          const newOutput = path.join(outdir, newPath);
-          log("Renaming:", relPath, "->", newPath);
-          await fsp.mkdir(path.dirname(newOutput), { recursive: true });
-          await fsp.rename(output, newOutput);
-          outputs[newOutput] = meta;
-          remove(outputs, output);
-        }
-        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
-        if (combinedStubs[entryPoint] && newImport !== entryPoint) {
-          combinedStubs[newImport] = combinedStubs[entryPoint];
-          remove(combinedStubs, entryPoint);
-        }
-        log("Output processor result", {
-          entryPoint,
-          result,
-          newPath,
-          newImport,
-          combinedStubs,
-        });
+      if (result.errors.length > 0) {
+        log("build failed with errors", result.errors);
+        return;
       }
 
-      log("New stubs", combinedStubs);
-    } else {
-      for (const [output, meta] of Object.entries(outputs)) {
-        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+      metaResults.set(key, { importStubs, result });
+    },
+    process: async () => {
+      const combinedResult = {} as esbuild.BuildResult;
+      const combinedStubs = {} as Record<string, string>;
 
-        if (!combinedStubs[entryPoint]) {
-          continue;
-        }
-
-        const newImport = path.relative(outdir, output);
-
-        if (newImport !== entryPoint) {
-          combinedStubs[newImport] = combinedStubs[entryPoint];
-          remove(combinedStubs, entryPoint);
-        }
+      for (const [, { importStubs, result }] of metaResults) {
+        merge(combinedResult, structuredClone(result));
+        merge(combinedStubs, structuredClone(importStubs));
       }
-    }
 
-    cleanupJS(outdir, log);
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const outputs = combinedResult.metafile!.outputs;
 
-    // Now we go through all of the output files and rewrite the import stubs to
-    // correct output path.
-    await Promise.all(
-      Object.keys(outputs).map(async (output) => {
-        let contents = await fsp.readFile(output, { encoding: "utf8" });
-        for (const [file, stub] of Object.entries(combinedStubs)) {
-          const replacement = importPrefix + file;
-          log("Replacing import stub:", {
-            stub,
-            replacement,
-            output,
-            contents,
+      if (outputProcessor) {
+        for (const [output, meta] of Object.entries(outputs)) {
+          const relPath = path.relative(outdir, output);
+          const result = await outputProcessor.onOutput(relPath);
+          if (!result) {
+            continue;
+          }
+          const { path: newPath = relPath, importStr: newImport = newPath } =
+            result;
+          if (newPath !== relPath) {
+            const newOutput = path.join(outdir, newPath);
+            log("Renaming:", relPath, "->", newPath);
+            await fsp.mkdir(path.dirname(newOutput), { recursive: true });
+            await fsp.rename(output, newOutput);
+            outputs[newOutput] = meta;
+            remove(outputs, output);
+          }
+          const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+          if (combinedStubs[entryPoint] && newImport !== entryPoint) {
+            combinedStubs[newImport] = combinedStubs[entryPoint];
+            remove(combinedStubs, entryPoint);
+          }
+          log("Output processor result", {
+            entryPoint,
+            result,
+            newPath,
+            newImport,
+            combinedStubs,
           });
-          contents = contents.replaceAll(stub, replacement);
         }
-        await fsp.writeFile(output, contents);
-      }),
-    );
 
-    if (outputProcessor?.onEnd) {
-      return outputProcessor.onEnd(outdir, combinedResult);
-    }
+        log("New stubs", combinedStubs);
+      } else {
+        for (const [output, meta] of Object.entries(outputs)) {
+          const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+
+          if (!combinedStubs[entryPoint]) {
+            continue;
+          }
+
+          const newImport = path.relative(outdir, output);
+
+          if (newImport !== entryPoint) {
+            combinedStubs[newImport] = combinedStubs[entryPoint];
+            remove(combinedStubs, entryPoint);
+          }
+        }
+      }
+
+      cleanupJS(outdir, log);
+
+      // Now we go through all of the output files and rewrite the import stubs to
+      // correct output path.
+      await Promise.all(
+        Object.keys(outputs).map(async (output) => {
+          let contents = await fsp.readFile(output, { encoding: "utf8" });
+          for (const [file, stub] of Object.entries(combinedStubs)) {
+            const replacement = importPrefix + file;
+            log("Replacing import stub:", {
+              stub,
+              replacement,
+              output,
+              contents,
+            });
+            contents = contents.replaceAll(stub, replacement);
+          }
+          await fsp.writeFile(output, contents);
+        }),
+      );
+
+      if (outputProcessor?.onEnd) {
+        return outputProcessor.onEnd(outdir, combinedResult);
+      }
+    },
   };
 };
 
