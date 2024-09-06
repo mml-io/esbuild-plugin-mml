@@ -187,7 +187,10 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
             cwd: process.cwd(),
           });
 
-          const output = path.resolve(outdir, assetDir, basename(args.path));
+          const output = path.relative(
+            process.cwd(),
+            path.resolve(outdir, assetDir, basename(args.path)),
+          );
           const entrypoint = path.relative(process.cwd(), args.path);
 
           assets.push({ output, entrypoint });

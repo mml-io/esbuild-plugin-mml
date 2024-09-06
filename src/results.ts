@@ -13,6 +13,7 @@ export type MaybePromise<T> = Promise<T> | T;
 
 export interface OutputProcessor {
   onOutput(path: string): MaybePromise<OutputProcessorResult | undefined>;
+  onAsset?(path: string): MaybePromise<OutputProcessorResult | undefined>;
   onEnd?(
     outdir: string,
     result: esbuild.BuildResult,
@@ -83,8 +84,15 @@ export const makeResultProcessor = ({
 
       if (outputProcessor) {
         for (const [output, meta] of Object.entries(outputs)) {
+          console.log({ output, combinedStubs, meta });
+          const isAsset =
+            meta.entryPoint &&
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+            combinedStubs[meta.entryPoint]?.startsWith("asset:");
           const relPath = path.relative(outdir, output);
-          const result = await outputProcessor.onOutput(relPath);
+          const result = isAsset
+            ? await outputProcessor.onAsset?.(relPath)
+            : await outputProcessor.onOutput(relPath);
           if (!result) {
             continue;
           }
