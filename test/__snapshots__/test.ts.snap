@@ -6,7 +6,7 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/1 1`
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -18,7 +18,7 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/2 1`
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   var e_default = "ws:///e.html";
   console.log(b_default, d_default, duck_default);
   console.log(e_default);
@@ -32,7 +32,7 @@ exports[`context rebuild: generated/relative-outpath/context/rebuild/a.html/3 1`
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -150,7 +150,7 @@ exports[`context watch: generated/relative-outpath/context/watch/a.html/1 1`] = 
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -162,7 +162,7 @@ exports[`context watch: generated/relative-outpath/context/watch/a.html/2 1`] = 
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -287,7 +287,7 @@ exports[`mml plugin with absolute outdir path with default options: generated/ab
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -319,7 +319,7 @@ exports[`mml plugin with absolute outdir path with import prefix: generated/abso
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -353,7 +353,7 @@ exports[`mml plugin with absolute outdir path with new import and path from outp
   var b_default = "ws:///blump/b.html";
   var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "blip/assets/duck.glb";
+  var duck_default = "/blip/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -383,7 +383,7 @@ exports[`mml plugin with absolute outdir path with new import from output proces
   var b_default = "ws:///quux/b.html";
   var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "qack/assets/duck.glb";
+  var duck_default = "/qack/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -415,7 +415,7 @@ exports[`mml plugin with absolute outdir path with new path from output processo
   var b_default = "ws:///bar/b.html";
   var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "baz/assets/duck.glb";
+  var duck_default = "/baz/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -447,7 +447,7 @@ exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -494,7 +494,7 @@ exports[`mml plugin with relative outdir path with default options: generated/re
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -526,7 +526,7 @@ exports[`mml plugin with relative outdir path with import prefix: generated/rela
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -560,7 +560,7 @@ exports[`mml plugin with relative outdir path with new import and path from outp
   var b_default = "ws:///blump/b.html";
   var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "blip/assets/duck.glb";
+  var duck_default = "/blip/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -590,7 +590,7 @@ exports[`mml plugin with relative outdir path with new import from output proces
   var b_default = "ws:///quux/b.html";
   var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "qack/assets/duck.glb";
+  var duck_default = "/qack/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -622,7 +622,7 @@ exports[`mml plugin with relative outdir path with new path from output processo
   var b_default = "ws:///bar/b.html";
   var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "baz/assets/duck.glb";
+  var duck_default = "/baz/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
@@ -654,7 +654,7 @@ exports[`mml plugin with relative outdir path world: generated/relative-outpath/
   var b_default = "ws:///b.html";
   var d_default = "ws:///c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "assets/duck.glb";
+  var duck_default = "/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"

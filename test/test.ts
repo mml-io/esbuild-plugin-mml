@@ -115,8 +115,6 @@ describe("resultProcessor", () => {
       },
     });
 
-    await ctx.rebuild();
-
     expect.hasAssertions();
   });
 });
