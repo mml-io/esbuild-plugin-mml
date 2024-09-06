@@ -105,8 +105,7 @@ export async function worldContext({
             for (const [jsPath, meta] of Object.entries(outputs)) {
               if (!meta.entryPoint) continue;
               const jsonPath = jsPath.replace(jsExt, ".json");
-              // eslint-disable-next-line @typescript-eslint/no-require-imports
-              const { default: js } = require(path.resolve(jsPath)) as {
+              const { default: js } = (await import(path.resolve(jsPath))) as {
                 default: MMLWorldConfig;
               };
               const json = JSON.stringify(js, null, 2);

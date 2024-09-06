@@ -13,6 +13,9 @@ export type MaybePromise<T> = Promise<T> | T;
 export interface MMLPluginOptions {
   verbose?: boolean;
   outputProcessor?: OutputProcessorProvider;
+  documentPrefix?: string;
+  assetPrefix?: string;
+  assetDir?: string;
   importPrefix?: string;
 }
 
@@ -20,13 +23,24 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
   const {
     verbose,
     outputProcessor: outputProcessorProvider,
-    importPrefix = "ws:///",
+    importPrefix,
+    assetPrefix = "/",
+    assetDir = "assets",
   } = args;
+  let { documentPrefix = "ws:///" } = args;
+
   const log = verbose
     ? (...args: unknown[]) => {
         console.log("[mml]:", ...args);
       }
     : noop;
+
+  if (importPrefix) {
+    log("importPrefix is deprecated, use documentPrefix instead");
+    if (!documentPrefix) {
+      documentPrefix = importPrefix;
+    }
+  }
 
   return {
     name: "mml",
@@ -55,19 +69,22 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       initialOptions.entryPoints = [];
 
-      const onResult = makeResultProcessor(
+      const processor = makeResultProcessor({
         outdir,
-        importPrefix,
+        documentPrefix,
+        assetPrefix,
         log,
-        outputProcessorProvider?.(log),
-      );
+        outputProcessor: outputProcessorProvider?.(log),
+      });
 
       const documentCtx = await documentContext({
         build: build.esbuild,
         documents,
+        assetDir,
         options: initialOptions,
         onEnd: async (result, importStubs) => {
-          await onResult("document", result, importStubs);
+          processor.pushResult("document", result, importStubs);
+          await processor.process();
         },
         verbose,
       });
@@ -76,11 +93,14 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
         build: build.esbuild,
         worlds,
         onEnd: async (result, discoveredDocuments, importStubs) => {
+          processor.pushResult("world", result, importStubs);
+          if (discoveredDocuments.size === 0) {
+            return;
+          }
           await documentCtx.rebuildWithDocuments(
             discoveredDocuments,
             importStubs,
           );
-          await onResult("world", result, importStubs);
         },
         options: initialOptions,
         verbose,
@@ -88,11 +108,11 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
       build.onStart(async () => {
         log("onStart");
-        await worldCtx.rebuild();
-      });
-
-      build.onEnd(async (result) => {
-        await onResult("root", result, {});
+        if (worlds.length > 0) {
+          await worldCtx.rebuild();
+        } else {
+          await documentCtx.rebuild();
+        }
       });
 
       build.onDispose(() => {

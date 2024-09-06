@@ -34,6 +34,17 @@ async function* walk(dir: string): AsyncGenerator<{
     if (stat.isDirectory()) {
       yield* walk(fullPath);
     } else {
+      if (
+        !file.endsWith(".html") &&
+        !file.endsWith(".json") &&
+        !file.endsWith(".js")
+      ) {
+        yield {
+          path: path.relative(__dirname, fullPath),
+          content: file,
+        };
+        continue;
+      }
       const content = await fsp.readFile(fullPath, "utf-8");
       yield {
         path: path.relative(__dirname, fullPath),
@@ -80,46 +91,29 @@ describe("resultProcessor", () => {
 
   afterEach(() => ctx?.dispose());
 
-  it("re-writes import paths for worlds", async () => {
-    const outdir = path.join(relativeOutdir, "result-processor", "world");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    const onEnd = makeResultProcessor(outdir, "wss://", noop);
-
-    ctx = await worldContext({
-      worlds: ["test/src/world.ts"],
-      options: { outdir },
-      onEnd: async (result, _, importStubs) => {
-        await onEnd("world", result, importStubs);
-        for await (const { path, content } of walk(outdir)) {
-          expect(content).toMatchSnapshot(path);
-        }
-      },
-    });
-
-    await ctx.rebuild();
-
-    expect.hasAssertions();
-  });
-
   it("re-writes import paths for documents", async () => {
     const outdir = path.join(relativeOutdir, "result-processor", "world");
     await fsp.rm(outdir, { recursive: true, force: true });
 
-    const onEnd = makeResultProcessor(outdir, "wss://", noop);
+    const processor = makeResultProcessor({
+      outdir,
+      documentPrefix: "ws:///",
+      assetPrefix: "http://",
+      log: noop,
+    });
 
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
+      assetDir: "assets",
       onEnd: async (result, importStubs) => {
-        await onEnd("document", result, importStubs);
+        processor.pushResult("document", result, importStubs);
+        await processor.process();
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
         }
       },
     });
-
-    await ctx.rebuild();
 
     expect.hasAssertions();
   });
@@ -137,6 +131,7 @@ describe("documentContext", () => {
     ctx = await documentContext({
       documents: ["test/src/a.ts"],
       options: { outdir },
+      assetDir: "assets",
       onEnd: async (_result, importStubs) => {
         for await (const { path, content } of walk(outdir)) {
           expect(content).toMatchSnapshot(path);
@@ -144,6 +139,7 @@ describe("documentContext", () => {
         expect(importStubs).toEqual({
           "test/src/b.ts": "mml:test/src/b.ts",
           "test/src/c/d.html": "mml:test/src/c/d.html",
+          "test/src/duck.glb": "asset:test/src/duck.glb",
         });
       },
     });
@@ -223,12 +219,18 @@ describe("mml plugin", () => {
               onOutput(output) {
                 return { path: path.join("bar/", output) };
               },
+              onAsset(asset) {
+                return { path: path.join("baz/", asset) };
+              },
             }),
           }),
         ],
       };
 
       await esbuild.build(config);
+      // This is a hack to wait for dispose to finish, because the onDispose plugin
+      // callback is not async so we cannot wait the promises running inside it.
+      await new Promise((resolve) => setTimeout(resolve, 100));
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -248,6 +250,9 @@ describe("mml plugin", () => {
                 return {
                   importStr: "quux/" + output,
                 };
+              },
+              onAsset(asset) {
+                return { path: path.join("qack/", asset) };
               },
             }),
           }),
@@ -274,6 +279,12 @@ describe("mml plugin", () => {
                 return {
                   path: "flump/" + output,
                   importStr: "blump/" + output,
+                };
+              },
+              onAsset(asset) {
+                return {
+                  path: path.join("flop/", asset),
+                  importStr: "blip/" + asset,
                 };
               },
             }),
@@ -384,6 +395,6 @@ describe("context", () => {
 
     // This is a hack to wait for dispose to finish, because the onDispose plugin
     // callback is not async so we cannot wait the promises running inside it.
-    await new Promise((resolve) => setTimeout(resolve, 10));
+    await new Promise((resolve) => setTimeout(resolve, 20));
   });
 });

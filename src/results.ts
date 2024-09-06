@@ -13,6 +13,7 @@ export type MaybePromise<T> = Promise<T> | T;
 
 export interface OutputProcessor {
   onOutput(path: string): MaybePromise<OutputProcessorResult | undefined>;
+  onAsset?(path: string): MaybePromise<OutputProcessorResult | undefined>;
   onEnd?(
     outdir: string,
     result: esbuild.BuildResult,
@@ -28,112 +29,139 @@ interface MetaResult {
   result: esbuild.BuildResult<{ metafile: true }>;
 }
 
-export const makeResultProcessor = (
-  outdir: string,
-  importPrefix: string,
-  log: typeof console.log,
-  outputProcessor?: OutputProcessor,
-) => {
+interface MakeResultProcessorOptions {
+  outdir: string;
+  documentPrefix: string;
+  assetPrefix: string;
+  log: typeof console.log;
+  outputProcessor?: OutputProcessor;
+}
+
+// TODO: make this return two functions, ont for onResult and one for onEnd
+export const makeResultProcessor = ({
+  outdir,
+  documentPrefix,
+  assetPrefix,
+  log,
+  outputProcessor,
+}: MakeResultProcessorOptions) => {
   const metaResults = new Map<string, MetaResult>();
 
-  return async (
-    key: string,
-    result: esbuild.BuildResult,
-    importStubs: Record<string, string>,
-  ) => {
-    log("new result", util.inspect({ key, importStubs, result }, { depth: 5 }));
+  return {
+    pushResult(
+      key: string,
+      result: esbuild.BuildResult,
+      importStubs: Record<string, string>,
+    ) {
+      log(
+        "new result",
+        util.inspect({ key, importStubs, result }, { depth: 5 }),
+      );
 
-    if (result.errors.length > 0) {
-      log("build failed with errors", result.errors);
-      return;
-    }
-
-    metaResults.set(key, { importStubs, result });
-
-    const combinedResult = {} as esbuild.BuildResult;
-    const combinedStubs = {} as Record<string, string>;
-
-    for (const [, { importStubs, result }] of metaResults) {
-      merge(combinedResult, result);
-      merge(combinedStubs, importStubs);
-    }
-
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const outputs = combinedResult.metafile!.outputs;
-
-    if (outputProcessor) {
-      for (const [output, meta] of Object.entries(outputs)) {
-        const relPath = path.relative(outdir, output);
-        const result = await outputProcessor.onOutput(relPath);
-        if (!result) {
-          continue;
-        }
-        const { path: newPath = relPath, importStr: newImport = newPath } =
-          result;
-        if (newPath !== relPath) {
-          const newOutput = path.join(outdir, newPath);
-          log("Renaming:", relPath, "->", newPath);
-          await fsp.mkdir(path.dirname(newOutput), { recursive: true });
-          await fsp.rename(output, newOutput);
-          outputs[newOutput] = meta;
-          remove(outputs, output);
-        }
-        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
-        if (combinedStubs[entryPoint] && newImport !== entryPoint) {
-          combinedStubs[newImport] = combinedStubs[entryPoint];
-          remove(combinedStubs, entryPoint);
-        }
-        log("Output processor result", {
-          entryPoint,
-          result,
-          newPath,
-          newImport,
-          combinedStubs,
-        });
+      if (result.errors.length > 0) {
+        log("build failed with errors", result.errors);
+        return;
       }
 
-      log("New stubs", combinedStubs);
-    } else {
-      for (const [output, meta] of Object.entries(outputs)) {
-        const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+      metaResults.set(key, { importStubs, result });
+    },
+    process: async () => {
+      const combinedResult = {} as esbuild.BuildResult;
+      const combinedStubs = {} as Record<string, string>;
 
-        if (!combinedStubs[entryPoint]) {
-          continue;
+      for (const [, { importStubs, result }] of metaResults) {
+        merge(combinedResult, structuredClone(result));
+        merge(combinedStubs, structuredClone(importStubs));
+      }
+
+      if (combinedResult.errors.length > 0) {
+        log("build failed with errors", combinedResult.errors);
+        return;
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const outputs = combinedResult.metafile!.outputs;
+
+      const isAsset = (meta: (typeof outputs)[string]) =>
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        meta.entryPoint && combinedStubs[meta.entryPoint]?.startsWith("asset:");
+
+      if (outputProcessor) {
+        for (const [output, meta] of Object.entries(outputs)) {
+          const relPath = path.relative(outdir, output);
+          const result =
+            (isAsset(meta)
+              ? await outputProcessor.onAsset?.(relPath)
+              : await outputProcessor.onOutput(relPath)) ?? {};
+
+          const { path: newPath = relPath, importStr: newImport = newPath } =
+            result;
+          if (newPath !== relPath) {
+            const newOutput = path.join(outdir, newPath);
+            log("Renaming:", relPath, "->", newPath);
+            await fsp.mkdir(path.dirname(newOutput), { recursive: true });
+            await fsp.rename(output, newOutput);
+            outputs[newOutput] = meta;
+            remove(outputs, output);
+          }
+          const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
+          if (combinedStubs[entryPoint] && newImport !== entryPoint) {
+            log("Replacing import stub:", { entryPoint, newImport });
+            combinedStubs[newImport] = combinedStubs[entryPoint];
+            remove(combinedStubs, entryPoint);
+          }
         }
 
-        const newImport = path.relative(outdir, output);
+        log("New stubs", combinedStubs);
+      } else {
+        for (const [output, meta] of Object.entries(outputs)) {
+          const entryPoint = meta.entryPoint ?? Object.keys(meta.inputs)[0];
 
-        if (newImport !== entryPoint) {
-          combinedStubs[newImport] = combinedStubs[entryPoint];
-          remove(combinedStubs, entryPoint);
+          if (!combinedStubs[entryPoint]) {
+            continue;
+          }
+
+          const newImport = path.relative(outdir, output);
+
+          if (newImport !== entryPoint) {
+            combinedStubs[newImport] = combinedStubs[entryPoint];
+            remove(combinedStubs, entryPoint);
+          }
         }
       }
-    }
 
-    cleanupJS(outdir, log);
+      cleanupJS(outdir, log);
 
-    // Now we go through all of the output files and rewrite the import stubs to
-    // correct output path.
-    await Promise.all(
-      Object.keys(outputs).map(async (output) => {
-        let contents = await fsp.readFile(output, { encoding: "utf8" });
-        for (const [file, stub] of Object.entries(combinedStubs)) {
-          const replacement = importPrefix + file;
-          log("Replacing import stub:", {
-            stub,
-            replacement,
-            output,
-            contents,
-          });
-          contents = contents.replaceAll(stub, replacement);
-        }
-        await fsp.writeFile(output, contents);
-      }),
-    );
+      // Now we go through all of the output files and rewrite the import stubs to
+      // correct output path.
+      await Promise.all(
+        Object.keys(outputs).map(async (output) => {
+          if (!output.endsWith(".json") && !output.endsWith(".html")) return;
 
-    if (outputProcessor?.onEnd) {
-      return outputProcessor.onEnd(outdir, combinedResult);
-    }
+          let contents = await fsp.readFile(output, { encoding: "utf8" });
+
+          for (const [file, stub] of Object.entries(combinedStubs)) {
+            if (!stub.startsWith("mml:") && !stub.startsWith("asset:")) {
+              continue;
+            }
+            const replacement = stub.startsWith("mml")
+              ? documentPrefix + file
+              : assetPrefix + file;
+            log("Replacing import stub:", {
+              stub,
+              replacement,
+              output,
+            });
+            contents = contents.replaceAll(stub, replacement);
+          }
+          await fsp.writeFile(output, contents);
+        }),
+      );
+
+      if (outputProcessor?.onEnd) {
+        return outputProcessor.onEnd(outdir, combinedResult);
+      }
+    },
   };
 };
 
