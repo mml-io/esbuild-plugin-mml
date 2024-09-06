@@ -82,20 +82,18 @@ export const makeResultProcessor = ({
       // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const outputs = combinedResult.metafile!.outputs;
 
+      const isAsset = (meta: (typeof outputs)[string]) =>
+        // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+        meta.entryPoint && combinedStubs[meta.entryPoint]?.startsWith("asset:");
+
       if (outputProcessor) {
         for (const [output, meta] of Object.entries(outputs)) {
-          console.log({ output, combinedStubs, meta });
-          const isAsset =
-            meta.entryPoint &&
-            // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-            combinedStubs[meta.entryPoint]?.startsWith("asset:");
           const relPath = path.relative(outdir, output);
-          const result = isAsset
-            ? await outputProcessor.onAsset?.(relPath)
-            : await outputProcessor.onOutput(relPath);
-          if (!result) {
-            continue;
-          }
+          const result =
+            (isAsset(meta)
+              ? await outputProcessor.onAsset?.(relPath)
+              : await outputProcessor.onOutput(relPath)) ?? {};
+
           const { path: newPath = relPath, importStr: newImport = newPath } =
             result;
           if (newPath !== relPath) {
@@ -138,7 +136,10 @@ export const makeResultProcessor = ({
       // correct output path.
       await Promise.all(
         Object.keys(outputs).map(async (output) => {
+          if (!output.endsWith(".json") && !output.endsWith(".html")) return;
+
           let contents = await fsp.readFile(output, { encoding: "utf8" });
+
           for (const [file, stub] of Object.entries(combinedStubs)) {
             if (!stub.startsWith("mml:") && !stub.startsWith("asset:")) {
               continue;

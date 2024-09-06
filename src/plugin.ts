@@ -24,7 +24,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
     verbose,
     outputProcessor: outputProcessorProvider,
     importPrefix,
-    assetPrefix = "",
+    assetPrefix = "/",
     assetDir = "assets",
   } = args;
   let { documentPrefix = "ws:///" } = args;

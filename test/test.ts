@@ -221,6 +221,9 @@ describe("mml plugin", () => {
               onOutput(output) {
                 return { path: path.join("bar/", output) };
               },
+              onAsset(asset) {
+                return { path: path.join("baz/", asset) };
+              },
             }),
           }),
         ],
@@ -250,6 +253,9 @@ describe("mml plugin", () => {
                   importStr: "quux/" + output,
                 };
               },
+              onAsset(asset) {
+                return { path: path.join("qack/", asset) };
+              },
             }),
           }),
         ],
@@ -275,6 +281,12 @@ describe("mml plugin", () => {
                 return {
                   path: "flump/" + output,
                   importStr: "blump/" + output,
+                };
+              },
+              onAsset(asset) {
+                return {
+                  path: path.join("flop/", asset),
+                  importStr: "blip/" + asset,
                 };
               },
             }),

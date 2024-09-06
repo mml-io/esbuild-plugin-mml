@@ -345,19 +345,19 @@ exports[`mml plugin with absolute outdir path with import prefix: generated/abso
 "
 `;
 
+exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flop/assets/duck.glb 1`] = `"duck.glb"`;
+
 exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/a.html 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///blump/b.html";
   var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "blump/assets/duck.glb";
+  var duck_default = "blip/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with absolute outdir path with new import and path from output processor: generated/absolute-outpath/new-import-and-path/flump/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -383,13 +383,11 @@ exports[`mml plugin with absolute outdir path with new import from output proces
   var b_default = "ws:///quux/b.html";
   var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "quux/assets/duck.glb";
+  var duck_default = "qack/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -409,19 +407,19 @@ exports[`mml plugin with absolute outdir path with new import from output proces
 "
 `;
 
+exports[`mml plugin with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/qack/assets/duck.glb 1`] = `"duck.glb"`;
+
 exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/a.html 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///bar/b.html";
   var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "bar/assets/duck.glb";
+  var duck_default = "baz/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/bar/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -440,6 +438,8 @@ exports[`mml plugin with absolute outdir path with new path from output processo
 </html>
 "
 `;
+
+exports[`mml plugin with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/baz/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with absolute outdir path world: generated/absolute-outpath/world/a.html 1`] = `
 "<body></body><script>"use strict";
@@ -552,19 +552,19 @@ exports[`mml plugin with relative outdir path with import prefix: generated/rela
 "
 `;
 
+exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flop/assets/duck.glb 1`] = `"duck.glb"`;
+
 exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/a.html 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///blump/b.html";
   var d_default = "ws:///blump/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "blump/assets/duck.glb";
+  var duck_default = "blip/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with relative outdir path with new import and path from output processor: generated/relative-outpath/new-import-and-path/flump/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -590,13 +590,11 @@ exports[`mml plugin with relative outdir path with new import from output proces
   var b_default = "ws:///quux/b.html";
   var d_default = "ws:///quux/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "quux/assets/duck.glb";
+  var duck_default = "qack/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -616,19 +614,19 @@ exports[`mml plugin with relative outdir path with new import from output proces
 "
 `;
 
+exports[`mml plugin with relative outdir path with new import from output processor: generated/relative-outpath/new-import/qack/assets/duck.glb 1`] = `"duck.glb"`;
+
 exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/a.html 1`] = `
 "<body></body><script>"use strict";
 (() => {
   var b_default = "ws:///bar/b.html";
   var d_default = "ws:///bar/c/d.html";
   var c = "wat-" + d_default;
-  var duck_default = "bar/assets/duck.glb";
+  var duck_default = "baz/assets/duck.glb";
   console.log(b_default, d_default, duck_default);
 })();
 </script>"
 `;
-
-exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/bar/b.html 1`] = `
 "<body></body><script>"use strict";
@@ -647,6 +645,8 @@ exports[`mml plugin with relative outdir path with new path from output processo
 </html>
 "
 `;
+
+exports[`mml plugin with relative outdir path with new path from output processor: generated/relative-outpath/new-path/baz/assets/duck.glb 1`] = `"duck.glb"`;
 
 exports[`mml plugin with relative outdir path world: generated/relative-outpath/world/a.html 1`] = `
 "<body></body><script>"use strict";
