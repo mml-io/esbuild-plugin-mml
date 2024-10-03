@@ -14,7 +14,7 @@ export interface WorldContextOptions {
     result: esbuild.BuildResult,
     discoveredDocuments: Set<string>,
     importStubs: Record<string, string>,
-  ) => Promise<void>;
+  ) => Promise<void> | void;
   options?: esbuild.BuildOptions;
 }
 
@@ -33,7 +33,7 @@ export async function worldContext({
       }
     : noop;
 
-  const ctx = await build.context({
+  return build.context({
     ...options,
     entryPoints: worlds,
     format: "cjs",
@@ -72,7 +72,6 @@ export async function worldContext({
             return {
               ...resolved,
               namespace: "mml",
-              watchFiles: [resolved.path],
             };
           });
 
@@ -123,8 +122,6 @@ export async function worldContext({
       },
     ],
   });
-  await ctx.watch();
-  return ctx;
 }
 
 const jsExt = /\.js$/;

@@ -7,25 +7,19 @@ export interface DocumentPluginOptions {
   importStubs: Record<string, string>;
   verbose?: boolean;
   assetDir: string;
+  onDiscoveredDocuments: (documents: Set<string>) => Promise<void> | void;
   onEnd?: (
     result: esbuild.BuildResult,
     importStubs: Record<string, string>,
   ) => Promise<void>;
 }
 
-export interface DocumentContext extends esbuild.BuildContext {
-  rebuildWithDocuments(
-    documents: Set<string>,
-    importStubs: Record<string, string>,
-  ): Promise<void>;
-}
-
 export interface DocumentContextOptions {
   documents: string[];
   build?: esbuild.PluginBuild["esbuild"];
-  worldDocuments?: Set<string>;
   assetDir: string;
   verbose?: boolean;
+  onDiscoveredDocuments: (documents: Set<string>) => Promise<void> | void;
   onEnd?: (
     result: esbuild.BuildResult,
     importStubs: Record<string, string>,
@@ -36,16 +30,17 @@ export interface DocumentContextOptions {
 export async function documentContext({
   documents,
   options,
-  worldDocuments = new Set<string>(),
   verbose,
   assetDir,
   onEnd,
+  onDiscoveredDocuments,
   build = esbuild,
-}: DocumentContextOptions): Promise<DocumentContext> {
-  let importStubs: Record<string, string> = {};
-  let ctx = await build.context({
+}: DocumentContextOptions): Promise<esbuild.BuildContext> {
+  const importStubs: Record<string, string> = {};
+
+  return build.context({
     ...options,
-    entryPoints: documents.concat(...worldDocuments),
+    entryPoints: documents,
     format: "iife",
     plugins: [
       documentPlugin({
@@ -53,55 +48,10 @@ export async function documentContext({
         importStubs,
         verbose,
         onEnd,
+        onDiscoveredDocuments,
       }),
     ],
   });
-
-  void ctx.watch();
-
-  return {
-    async rebuildWithDocuments(
-      newWorldDocuments: Set<string>,
-      newImportStubs: Record<string, string>,
-    ) {
-      if (!eq(newWorldDocuments, worldDocuments)) {
-        worldDocuments = newWorldDocuments;
-        importStubs = newImportStubs;
-        await ctx.dispose();
-        ctx = await build.context({
-          ...options,
-          entryPoints: documents.concat(...worldDocuments),
-          format: "iife",
-          plugins: [
-            documentPlugin({
-              assetDir,
-              importStubs,
-              verbose,
-              onEnd,
-            }),
-          ],
-        });
-        void ctx.watch();
-      }
-      await ctx.rebuild();
-    },
-
-    rebuild(): Promise<esbuild.BuildResult> {
-      return ctx.rebuild();
-    },
-    watch(opts: esbuild.WatchOptions): Promise<void> {
-      return ctx.watch(opts);
-    },
-    serve(opts: esbuild.ServeOptions): Promise<esbuild.ServeResult> {
-      return ctx.serve(opts);
-    },
-    cancel(): Promise<void> {
-      return ctx.cancel();
-    },
-    dispose(): Promise<void> {
-      return ctx.dispose();
-    },
-  };
 }
 
 const nonAssetExtensions = new Set([
@@ -114,10 +64,10 @@ const nonAssetExtensions = new Set([
 ]);
 
 export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
-  const { verbose, importStubs, assetDir, onEnd } = args;
+  const { verbose, importStubs, assetDir, onEnd, onDiscoveredDocuments } = args;
   const log = verbose
     ? (...args: unknown[]) => {
-        console.log("[mml-world]:", ...args);
+        console.log("[mml-document]:", ...args);
       }
     : noop;
 
@@ -158,7 +108,6 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
         return {
           ...resolved,
           namespace: "mml",
-          watchFiles: [resolved.path],
         };
       });
 
@@ -174,7 +123,6 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
         return {
           path: resolved,
           namespace: "asset",
-          watchFiles: [args.path],
         };
       });
 
@@ -232,17 +180,7 @@ export function documentPlugin(args: DocumentPluginOptions): esbuild.Plugin {
         }
 
         if (discoveredDocuments.size > 0) {
-          await esbuild.build({
-            ...build.initialOptions,
-            entryPoints: [
-              ...((build.initialOptions.entryPoints ?? []) as string[]),
-              ...discoveredDocuments,
-            ],
-            plugins: [
-              documentPlugin({ importStubs, verbose, assetDir, onEnd }),
-            ],
-          });
-
+          void onDiscoveredDocuments(discoveredDocuments);
           return;
         }
 
@@ -285,8 +223,4 @@ const jsExt = /\.js$/;
 function remove<T extends object>(object: T, key: keyof T) {
   // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
   delete object[key];
-}
-
-function eq<T>(a: Set<T>, b?: Set<T>): boolean {
-  return a.size === b?.size && Array.from(a).every((e) => b.has(e));
 }

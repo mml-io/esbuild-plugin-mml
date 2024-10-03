@@ -1,7 +1,6 @@
 import esbuild from "esbuild";
 import { makeResultProcessor, OutputProcessorProvider } from "./results";
-import { worldContext } from "./world";
-import { documentContext } from "./documents";
+import { Coordinator } from "./coordinator";
 
 export interface OutputProcessorResult {
   path?: string;
@@ -21,7 +20,7 @@ export interface MMLPluginOptions {
 
 export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
   const {
-    verbose,
+    verbose = false,
     outputProcessor: outputProcessorProvider,
     importPrefix,
     assetPrefix = "/",
@@ -44,7 +43,7 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
 
   return {
     name: "mml",
-    async setup(build) {
+    setup(build) {
       const { initialOptions } = build;
       log("setup", { initialOptions, args });
 
@@ -77,50 +76,24 @@ export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
         outputProcessor: outputProcessorProvider?.(log),
       });
 
-      const documentCtx = await documentContext({
-        build: build.esbuild,
+      const coordinator = new Coordinator({
+        worlds,
         documents,
         assetDir,
+        processor,
         options: initialOptions,
-        onEnd: async (result, importStubs) => {
-          processor.pushResult("document", result, importStubs);
-          await processor.process();
-        },
-        verbose,
-      });
-
-      const worldCtx = await worldContext({
         build: build.esbuild,
-        worlds,
-        onEnd: async (result, discoveredDocuments, importStubs) => {
-          processor.pushResult("world", result, importStubs);
-          if (discoveredDocuments.size === 0) {
-            return;
-          }
-          await documentCtx.rebuildWithDocuments(
-            discoveredDocuments,
-            importStubs,
-          );
-        },
-        options: initialOptions,
         verbose,
       });
 
       build.onStart(async () => {
         log("onStart");
-        if (worlds.length > 0) {
-          await worldCtx.rebuild();
-        } else {
-          await documentCtx.rebuild();
-        }
+        await coordinator.start();
       });
 
       build.onDispose(() => {
         log("onDispose");
-        void (async () => {
-          await worldCtx.dispose();
-          await documentCtx.dispose();
-        })();
+        void coordinator.finish();
       });
     },
   };

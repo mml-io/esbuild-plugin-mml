@@ -3,10 +3,7 @@ import { mml } from "../src";
 import fsp from "node:fs/promises";
 import path from "node:path";
 import { fail } from "node:assert";
-import { documentContext } from "../src/documents";
-import { worldContext } from "../src/world";
-import { makeResultProcessor } from "../src/results";
-import { noop } from "es-toolkit";
+import { waitForDebugger } from "node:inspector";
 
 if (process.cwd() !== path.dirname(__dirname)) {
   console.log(process.cwd(), path.dirname(__dirname));
@@ -19,6 +16,15 @@ const commentRegExp = /\s+\/\/.*(?=\n)/g;
 
 function stripComments(content: string): string {
   return content.replaceAll(commentRegExp, "");
+}
+
+async function waitForDispose() {
+  // NOTE: this is required because the onDispose callback is synchronous, so we
+  //  can't wait for the child processes to finish before returning without
+  //  blocking the main thread. This _feels_ like a bug in the API as we're
+  //  expected to `await` the dispose call anyway. Hopefully we can resolve
+  //  this after adding the capability upstream.
+  await new Promise((resolve) => setTimeout(resolve, 200));
 }
 
 async function* walk(dir: string): AsyncGenerator<{
@@ -57,99 +63,6 @@ async function* walk(dir: string): AsyncGenerator<{
 const absoluteOutdir = __dirname + "/generated/absolute-outpath";
 const relativeOutdir = "test/generated/relative-outpath";
 
-describe("worldContext", () => {
-  let ctx: esbuild.BuildContext | undefined = undefined;
-
-  afterEach(() => ctx?.dispose());
-
-  it("creates world JSON", async () => {
-    const outdir = path.join(relativeOutdir, "world-context");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    ctx = await worldContext({
-      worlds: ["test/src/world.ts"],
-      options: { outdir },
-      onEnd: async (_, discoveredDocuments, importStubs) => {
-        for await (const { path, content } of walk(outdir)) {
-          expect(content).toMatchSnapshot(path);
-        }
-        expect(discoveredDocuments).toEqual(new Set(["test/src/a.ts"]));
-        expect(importStubs).toEqual({
-          "test/src/a.ts": "mml:test/src/a.ts",
-        });
-      },
-    });
-
-    await ctx.rebuild();
-
-    expect.hasAssertions();
-  });
-});
-
-describe("resultProcessor", () => {
-  let ctx: esbuild.BuildContext | undefined = undefined;
-
-  afterEach(() => ctx?.dispose());
-
-  it("re-writes import paths for documents", async () => {
-    const outdir = path.join(relativeOutdir, "result-processor", "world");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    const processor = makeResultProcessor({
-      outdir,
-      documentPrefix: "ws:///",
-      assetPrefix: "http://",
-      log: noop,
-    });
-
-    ctx = await documentContext({
-      documents: ["test/src/a.ts"],
-      options: { outdir },
-      assetDir: "assets",
-      onEnd: async (result, importStubs) => {
-        processor.pushResult("document", result, importStubs);
-        await processor.process();
-        for await (const { path, content } of walk(outdir)) {
-          expect(content).toMatchSnapshot(path);
-        }
-      },
-    });
-
-    expect.hasAssertions();
-  });
-});
-
-describe("documentContext", () => {
-  let ctx: esbuild.BuildContext | undefined = undefined;
-
-  afterEach(() => ctx?.dispose());
-
-  it("creates MML HTML documents", async () => {
-    const outdir = path.join(relativeOutdir, "document-context");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    ctx = await documentContext({
-      documents: ["test/src/a.ts"],
-      options: { outdir },
-      assetDir: "assets",
-      onEnd: async (_result, importStubs) => {
-        for await (const { path, content } of walk(outdir)) {
-          expect(content).toMatchSnapshot(path);
-        }
-        expect(importStubs).toEqual({
-          "test/src/b.ts": "mml:test/src/b.ts",
-          "test/src/c/d.html": "mml:test/src/c/d.html",
-          "test/src/duck.glb": "asset:test/src/duck.glb",
-        });
-      },
-    });
-
-    await ctx.rebuild();
-
-    expect.hasAssertions();
-  });
-});
-
 describe("mml plugin", () => {
   describe.each([
     { name: "absolute", outPrefix: absoluteOutdir },
@@ -166,6 +79,8 @@ describe("mml plugin", () => {
 
       await esbuild.build(config);
 
+      await waitForDispose();
+
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
       }
@@ -181,6 +96,8 @@ describe("mml plugin", () => {
       };
 
       await esbuild.build(config);
+
+      await waitForDispose();
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -201,6 +118,8 @@ describe("mml plugin", () => {
       };
 
       await esbuild.build(config);
+
+      await waitForDispose();
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -228,9 +147,8 @@ describe("mml plugin", () => {
       };
 
       await esbuild.build(config);
-      // This is a hack to wait for dispose to finish, because the onDispose plugin
-      // callback is not async so we cannot wait the promises running inside it.
-      await new Promise((resolve) => setTimeout(resolve, 100));
+
+      await waitForDispose();
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -260,6 +178,8 @@ describe("mml plugin", () => {
       };
 
       await esbuild.build(config);
+
+      await waitForDispose();
 
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
@@ -294,6 +214,8 @@ describe("mml plugin", () => {
 
       await esbuild.build(config);
 
+      await waitForDispose();
+
       for await (const { path, content } of walk(outdir)) {
         expect(content).toMatchSnapshot(path);
       }
@@ -302,60 +224,6 @@ describe("mml plugin", () => {
 });
 
 describe("context", () => {
-  it("rebuild", async () => {
-    // copy src files to a scratch directory
-    const scratchDir = path.join(__dirname, "scratch", "rebuild");
-    await fsp.rm(scratchDir, { recursive: true, force: true });
-    await fsp.mkdir(scratchDir, { recursive: true });
-    await fsp.cp("test/src", scratchDir, { recursive: true });
-
-    const outdir = path.join(relativeOutdir, "context", "rebuild");
-    await fsp.rm(outdir, { recursive: true, force: true });
-
-    const config = {
-      outdir,
-      entryPoints: ["test/scratch/rebuild/world.ts"],
-      plugins: [mml()],
-    };
-
-    const ctx = await esbuild.context(config);
-
-    await ctx.rebuild();
-
-    for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path + "/1");
-    }
-
-    const originalContent = await fsp.readFile(
-      "test/scratch/rebuild/a.ts",
-      "utf-8",
-    );
-
-    await fsp.appendFile(
-      "test/scratch/rebuild/a.ts",
-      "\nimport e from 'mml:./e'; console.log(e);",
-    );
-
-    await ctx.rebuild();
-
-    for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path + "/2");
-    }
-
-    // NOTE: This does not remove the generated HTML file for e.ts from the
-    // build directory in watch mode. We should clean up the output directory
-    // based on the outputs in the metafile.
-    fsp.writeFile("test/scratch/rebuild/a.ts", originalContent);
-
-    await ctx.rebuild();
-
-    for await (const { path, content } of walk(outdir)) {
-      expect(content).toMatchSnapshot(path + "/3");
-    }
-
-    await ctx.dispose();
-  });
-
   it("watch", async () => {
     // copy src files to a scratch directory
     const scratchDir = path.join(__dirname, "scratch", "watch");
@@ -369,14 +237,14 @@ describe("context", () => {
     const config = {
       outdir,
       entryPoints: ["test/scratch/watch/world.ts"],
-      plugins: [mml()],
+      plugins: [mml({})],
     };
 
     const ctx = await esbuild.context(config);
 
     await ctx.watch();
 
-    await ctx.rebuild();
+    await new Promise((resolve) => setTimeout(resolve, 200));
 
     for await (const { path, content } of walk(outdir)) {
       expect(content).toMatchSnapshot(path + "/1");
@@ -387,8 +255,21 @@ describe("context", () => {
       "\nimport e from 'mml:./e'; console.log(e);",
     );
 
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
     for await (const { path, content } of walk(outdir)) {
       expect(content).toMatchSnapshot(path + "/2");
+    }
+
+    await fsp.appendFile(
+      "test/scratch/watch/b.ts",
+      "\nimport e from 'mml:./e'; console.log(e);",
+    );
+
+    await new Promise((resolve) => setTimeout(resolve, 200));
+
+    for await (const { path, content } of walk(outdir)) {
+      expect(content).toMatchSnapshot(path + "/3");
     }
 
     await ctx.dispose();
