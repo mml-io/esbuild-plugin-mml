@@ -1,32 +1,39 @@
 import * as esbuild from "esbuild";
-import { name, homepage, version, license } from "./package.json";
+import { dtsPlugin } from "./build-utils/dtsPlugin";
 
-const date = new Date();
-const banner = `/**
- * ${name} v${version} build ${date.toDateString()}
- * ${homepage}
- * Copyright 2024 Improbable MV Limited
- * @license ${license}
- */`;
+const watchMode = process.argv.includes("--watch");
 
-await esbuild.build({
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/index.js",
-  banner: { js: banner },
-  platform: "node",
-  logLevel: "info",
-  format: "esm",
-  bundle: true,
-  external: ["esbuild"],
-});
+const options: esbuild.BuildOptions[] = [
+  {
+    entryPoints: ["src/index.ts"],
+    outdir: "dist",
+    platform: "node",
+    logLevel: "info",
+    format: "esm",
+    bundle: true,
+    sourcemap: "inline",
+    external: ["esbuild"],
+    plugins: [dtsPlugin()],// Builds the d.ts file for both
+  },
+  {
+    entryPoints: ["src/index.ts"],
+    outfile: "dist/index.cjs",
+    platform: "node",
+    logLevel: "info",
+    format: "cjs",
+    bundle: true,
+    sourcemap: "inline",
+    external: ["esbuild"],
+  },
+];
 
-await esbuild.build({
-  entryPoints: ["src/index.ts"],
-  outfile: "dist/index.cjs",
-  banner: { js: banner },
-  platform: "node",
-  logLevel: "info",
-  format: "cjs",
-  bundle: true,
-  external: ["esbuild"],
-});
+for (const buildOptions of options) {
+  if (watchMode) {
+    esbuild
+      .context(buildOptions)
+      .then((context) => context.watch())
+      .catch(() => process.exit(1));
+  } else {
+    esbuild.build(buildOptions).catch(() => process.exit(1));
+  }
+}

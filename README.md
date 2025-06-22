@@ -4,54 +4,47 @@
 [![npm version](https://img.shields.io/npm/v/%40mml-io%2Fesbuild-plugin-mml?style=flat)](https://www.npmjs.com/package/@mml-io/esbuild-plugin-mml)
 ![GitHub top language](https://img.shields.io/github/languages/top/mml-io/esbuild-plugin-mml) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/mml-io/esbuild-plugin-mml/blob/main/LICENSE)
 
-An [esbuild](https://esbuild.github.io/) plugin that bundles JavaScript/React
-sources into an HTML document that can be run as an MML document. It also
-discovers additional documents via a special `mml:` import prefix, which
-triggers those to also be bundled and rewrite imports to a string containing
-the document URL.
+An esbuild plugin that bundles JavaScript/React sources into HTML documents for MML. Supports `mml:` import prefix for discovering and bundling additional documents.
 
 ## Installation
 
-```sh
+```bash
 npm install --save-dev @mml-io/esbuild-plugin-mml
 ```
 
 ## Usage
 
-```js
+```javascript
 import { build } from "esbuild";
 import { mml } from "@mml-io/esbuild-plugin-mml";
-import { mserveOutputProcessor } from "@mml-io/mserve";
 
 build({
-  // NOTE: entry points with "mml:" prefix are processed as MML documents.
-  // entry points with no prefix are considered processed as world configs.
   entryPoints: [
-    "mml:src/playground/index.tsx",
-    "src/playground.ts"
+    "mml:src/playground/index.tsx",  // MML document
+    "src/playground.ts"              // World config
   ],
   outdir: "build",
   outbase: "src",
   bundle: true,
-  plugins: [mml({ 
-    outputProcessor: mserveOutputProcessor(),
-  })],
+  plugins: [mml()],
 });
 ```
 
-### Options
+## Options
 
-| Option          | Description                                                                      | Default     |
-| --------------- | -------------------------------------------------------------------------------- | ----------- |
-| verbose         | Enables or disables logging.                                                     | `false`     |
-| outputProcessor | Used to generate new output file names and import re-writes.                     | `undefined` |
-| pathPrefix      | Prepended to all import path rewrites.                                           | `ws:///`    |
+| Option            | Type      | Description                           | Default   |
+|-------------------|-----------|---------------------------------------|-----------|
+| verbose           | boolean   | Enable logging                        | false     |
+| pathPrefix        | string    | Prefix for import path rewrites       | `ws:///`  |
+| assetDir          | string    | Asset output directory                | `assets`  |
+| assetPrefix       | string    | Asset URL prefix                      | `/`       |
+| stripHtmlExtension| boolean   | Remove .html from output URLs         | false     |
 
-### Custom imports TypeScript support
+## TypeScript Support
 
-To make the TypeScript compiler happy about the custom import syntax, add these type definitions to your project.
+Add these type definitions for custom import syntax:
 
-```ts
+```typescript
 declare module "*.html" {
   const value: string;
   export default value;

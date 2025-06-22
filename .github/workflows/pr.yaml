@@ -41,12 +41,48 @@ jobs:
       - name: Test
         run: npm run test
 
+  lint:
+    name: Lint
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: "Retrieve Dependencies and Build Artifacts"
+        id: retrieve-deps-and-build
+        uses: ./.github/actions/retrieve-deps-and-build
+
+      - name: Lint
+        run: npm run lint
+
+  type-check:
+    name: Type Check
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: "Retrieve Dependencies and Build Artifacts"
+        id: retrieve-deps-and-build
+        uses: ./.github/actions/retrieve-deps-and-build
+
+      - name: Type Check
+        run: npm run type-check
+
   summary:
     name: Summary
-    needs: [build, test]
+    needs: [build, lint, type-check, test]
     runs-on: ubuntu-latest
     steps:
       - name: Summary
         run: |
           echo "Build: ${{ needs.build.result }}"
-          echo "Test/Lint: ${{ needs.test.result }}"
+          echo "Lint: ${{ needs.lint.result }}"
+          echo "Type Check: ${{ needs.type-check.result }}"
+          echo "Test: ${{ needs.test.result }}"

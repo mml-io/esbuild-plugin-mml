@@ -4,4 +4,9 @@ export default {
   transform: {
     "^.+.tsx?$": ["ts-jest", {}],
   },
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "test/generated/",
+    "test/scratch/"
+  ],
 };

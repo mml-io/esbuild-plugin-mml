@@ -4,7 +4,7 @@ import prettier from "eslint-plugin-prettier/recommended";
 
 export default [
   {
-    ignores: ["dist/**", "test/**"],
+    ignores: ["dist/**", "test/**", "**/*.d.ts"],
   },
   js.configs.recommended,
   ...ts.configs.strictTypeChecked,
@@ -13,7 +13,7 @@ export default [
   {
     languageOptions: {
       parserOptions: {
-        project: ["tsconfig.build.json", "tsconfig.json"],
+        project: "tsconfig.json",
         tsconfigRootDir: import.meta.dirname,
       },
     },

@@ -1,105 +1,157 @@
-import esbuild from "esbuild";
-import { makeResultProcessor, OutputProcessorProvider } from "./results";
-import { Coordinator } from "./coordinator";
+import * as esbuild from "esbuild";
+import * as path from "path";
+import { MMLPluginOptions, Asset } from "./types";
+import { doDiscoveryBuild } from "./discovery";
+import { createAssetHandler } from "./asset-handling";
+import {
+  createEntryPointResolver,
+  createMMLImportResolver,
+  createMMLRefHandler,
+  createMMLTSXRefHandler,
+  createTSXHandler,
+  createWorldHandler,
+  createHTMLHandler,
+} from "./build-handlers";
+import { processOutputs } from "./output-processing";
+import { createUrlMapping } from "./utils";
 
-export interface OutputProcessorResult {
-  path?: string;
-  importStr?: string;
-}
+export { MMLPluginOptions } from "./types";
 
-export type MaybePromise<T> = Promise<T> | T;
-
-export interface MMLPluginOptions {
-  verbose?: boolean;
-  outputProcessor?: OutputProcessorProvider;
-  documentPrefix?: string;
-  assetPrefix?: string;
-  assetDir?: string;
-  importPrefix?: string;
-}
-
-export function mml(args: MMLPluginOptions = {}): esbuild.Plugin {
+export function mml(options: MMLPluginOptions = {}): esbuild.Plugin {
   const {
     verbose = false,
-    outputProcessor: outputProcessorProvider,
-    importPrefix,
-    assetPrefix = "/",
     assetDir = "assets",
-  } = args;
-  let { documentPrefix = "ws:///" } = args;
+    assetPrefix = "/",
+    documentPrefix = "ws:///",
+    stripHtmlExtension = false,
+  } = options;
 
   const log = verbose
-    ? (...args: unknown[]) => {
-        console.log("[mml]:", ...args);
-      }
-    : noop;
-
-  if (importPrefix) {
-    log("importPrefix is deprecated, use documentPrefix instead");
-    if (!documentPrefix) {
-      documentPrefix = importPrefix;
-    }
-  }
+    ? console.log.bind(console, "[mml]:")
+    : () => {
+        // No-op for non-verbose mode
+      };
 
   return {
     name: "mml",
-    setup(build) {
-      const { initialOptions } = build;
-      log("setup", { initialOptions, args });
+    setup: async (build) => {
+      const assets: Asset[] = [];
+      const outdir = build.initialOptions.outdir ?? "build";
 
-      (initialOptions.loader ??= {})[".html"] = "copy";
-      initialOptions.metafile = true;
-      initialOptions.bundle = true;
-      const outdir = (build.initialOptions.outdir ??= "build");
-
-      const [documents, worlds] = (
-        initialOptions.entryPoints as string[]
-      ).reduce<[string[], string[]]>(
-        ([documents, worlds], entryPoint) => {
-          if (entryPoint.startsWith("mml:")) {
-            documents.push(entryPoint.slice("mml:".length));
-          } else {
-            worlds.push(entryPoint);
-          }
-          return [documents, worlds];
-        },
-        [[], []],
+      const discoveredEntryPoints = await doDiscoveryBuild(
+        build.initialOptions,
       );
 
-      initialOptions.entryPoints = [];
+      if (verbose) {
+        log("discovered entry points:", {
+          tsx: Array.from(discoveredEntryPoints.tsx),
+          html: Array.from(discoveredEntryPoints.html),
+          world: Array.from(discoveredEntryPoints.world),
+        });
+      }
 
-      const processor = makeResultProcessor({
-        outdir,
-        documentPrefix,
-        assetPrefix,
-        log,
-        outputProcessor: outputProcessorProvider?.(log),
+      // Configure build options
+      Object.assign(build.initialOptions, {
+        loader: {
+          ...build.initialOptions.loader,
+          ".html": "copy",
+          ".glb": "file",
+        },
+        metafile: true,
+        bundle: true,
+        write: true,
+        entryPoints: [
+          ...discoveredEntryPoints.tsx,
+          ...discoveredEntryPoints.html,
+          ...discoveredEntryPoints.world,
+        ],
       });
 
-      const coordinator = new Coordinator({
-        worlds,
-        documents,
-        assetDir,
-        processor,
-        options: initialOptions,
-        build: build.esbuild,
-        verbose,
-      });
+      const outputDirectory = path.resolve(outdir);
+      const sourceRoot = path.relative(
+        process.cwd(),
+        path.resolve(build.initialOptions.sourceRoot ?? "."),
+      );
 
-      build.onStart(async () => {
-        log("onStart");
-        await coordinator.start();
-      });
+      const entryPointToOutputUrl = createUrlMapping(
+        discoveredEntryPoints,
+        sourceRoot,
+        stripHtmlExtension,
+      );
 
-      build.onDispose(() => {
-        log("onDispose");
-        void coordinator.finish();
+      if (verbose) {
+        log("configuration:", {
+          assetPrefix,
+          documentPrefix,
+          assetDir,
+          sourceRoot,
+          outputDirectory,
+          entryPointToOutputUrl,
+        });
+      }
+
+      // Register handlers
+      build.onResolve(
+        { filter: /.*/ },
+        createEntryPointResolver(discoveredEntryPoints, build),
+      );
+      build.onResolve({ filter: /^mml:/ }, createMMLImportResolver(build));
+
+      build.onLoad(
+        { filter: /.*/, namespace: "file" },
+        createAssetHandler(
+          sourceRoot,
+          outdir,
+          assetDir,
+          assetPrefix,
+          assets,
+          build,
+        ),
+      );
+
+      build.onLoad(
+        { filter: /.*/, namespace: "mml-build-ref" },
+        createMMLRefHandler(sourceRoot, entryPointToOutputUrl, documentPrefix),
+      );
+
+      build.onLoad(
+        { filter: /.*/, namespace: "mml-build-tsx-ref" },
+        createMMLTSXRefHandler(
+          sourceRoot,
+          entryPointToOutputUrl,
+          documentPrefix,
+        ),
+      );
+
+      build.onLoad(
+        { filter: /.*/, namespace: "mml-build-tsx" },
+        createTSXHandler(),
+      );
+      build.onLoad(
+        { filter: /.*/, namespace: "mml-build-world" },
+        createWorldHandler(),
+      );
+      build.onLoad(
+        { filter: /.*/, namespace: "mml-build-html" },
+        createHTMLHandler(),
+      );
+
+      build.onEnd(async (result) => {
+        await processOutputs(
+          result,
+          sourceRoot,
+          outputDirectory,
+          outdir,
+          entryPointToOutputUrl,
+          discoveredEntryPoints,
+          documentPrefix,
+          assetPrefix,
+          assets,
+          log,
+        );
       });
     },
   };
 }
 
 export default mml;
-
-// eslint-disable-next-line @typescript-eslint/no-empty-function
-function noop() {}

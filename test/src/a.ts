@@ -1,5 +1,5 @@
 import b from "mml:./b";
-import { d } from "./b";
+import { d as importedD } from "./b";
 import duck from "./duck.glb";
 
-console.log(b, d, duck);
+console.log(b, importedD, duck);

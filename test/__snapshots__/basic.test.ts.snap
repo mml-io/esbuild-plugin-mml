@@ -1,0 +1,987 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/a.js 1`] = `
+"(() => {
+  var b_default = "blump:test-src-b.html";
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://example.com/v1/blip/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/b.js 1`] = `
+"(() => {
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/flop/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "flop/test_src_duck.glb"
+  },
+  "documentPrefix": "blump:",
+  "assetPrefix": "https://example.com/v1/blip/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "blump:test-src-b.html";
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://example.com/v1/blip/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with assetPrefix: generated/absolute-outpath/assetPrefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with default options: generated/absolute-outpath/default-options/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/a.js 1`] = `
+"(() => {
+  var b_default = "wss://example.com/v1/someprefix_test-src-b.html";
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/b.js 1`] = `
+"(() => {
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "wss://example.com/v1/someprefix_",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "wss://example.com/v1/someprefix_test-src-b.html";
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with documentPrefix: generated/absolute-outpath/documentPrefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/a.js 1`] = `
+"(() => {
+  var b_default = "quux:test-src-b.html";
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/b.js 1`] = `
+"(() => {
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "qack/test_src_duck.glb"
+  },
+  "documentPrefix": "quux:",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/qack/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "quux:test-src-b.html";
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/baz/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "baz/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with new path from output processor: generated/absolute-outpath/new-path/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html",
+    "test-src-world.html": "test-src-world.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/test-src-world.html 1`] = `
+"<body></body><script>(() => {
+  var a_default = "ws:///test-src-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path world: generated/absolute-outpath/world/world.js 1`] = `
+"(() => {
+  var a_default = "ws:///test-src-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/a.js 1`] = `
+"(() => {
+  var b_default = "blump:test-src-b.html";
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://example.com/v1/blip/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/b.js 1`] = `
+"(() => {
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/flop/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "flop/test_src_duck.glb"
+  },
+  "documentPrefix": "blump:",
+  "assetPrefix": "https://example.com/v1/blip/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "blump:test-src-b.html";
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://example.com/v1/blip/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "blump:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with assetPrefix: generated/relative-outpath/assetPrefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with default options: generated/relative-outpath/default-options/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/a.js 1`] = `
+"(() => {
+  var b_default = "wss://example.com/v1/someprefix_test-src-b.html";
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/b.js 1`] = `
+"(() => {
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "wss://example.com/v1/someprefix_",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "wss://example.com/v1/someprefix_test-src-b.html";
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "wss://example.com/v1/someprefix_test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/a.js 1`] = `
+"(() => {
+  var b_default = "quux:test-src-b.html";
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/b.js 1`] = `
+"(() => {
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "qack/test_src_duck.glb"
+  },
+  "documentPrefix": "quux:",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/qack/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "quux:test-src-b.html";
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "quux:test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new import from output processor: generated/relative-outpath/new-import/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/baz/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "baz/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with new path from output processor: generated/relative-outpath/new-path/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html",
+    "test-src-world.html": "test-src-world.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/test-src-world.html 1`] = `
+"<body></body><script>(() => {
+  var a_default = "ws:///test-src-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path world: generated/relative-outpath/world/world.js 1`] = `
+"(() => {
+  var a_default = "ws:///test-src-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+"
+`;

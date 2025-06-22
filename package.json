@@ -8,10 +8,10 @@
   "sideEffects": false,
   "main": "dist/index.cjs",
   "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "types": "./dist/types/index.d.ts",
+      "types": "./dist/index.d.ts",
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
@@ -34,16 +34,15 @@
     "dist"
   ],
   "scripts": {
-    "build": "run-p build:*",
-    "build:ts": "tsx --tsconfig tsconfig.build.json build.ts",
-    "build:dts": "tsc -p tsconfig.d.json && copyfiles --flat ./src/mml.d.ts ./dist/types",
-    "clean": "rimraf dist",
+    "build": "tsx ./build.ts",
+    "watch": "tsx ./build.ts --watch",
     "depcheck": "depcheck",
-    "lint": "tsc --noemit && eslint src --fix",
-    "prepare": "run-s clean build",
+    "lint": "eslint \"./{src,test}/**/*.{js,jsx,ts,tsx}\" --max-warnings 0",
+    "lint-fix": "eslint \"./{src,test}/**/*.{js,jsx,ts,tsx}\" --fix",
     "prepublishOnly": "npm test",
     "jest": "jest",
-    "test": "run-s lint depcheck jest"
+    "test": "jest",
+    "type-check": "tsc --noEmit"
   },
   "peerDependencies": {
     "esbuild": "^0"
@@ -53,10 +52,12 @@
     "@types/eslint__js": "^8",
     "@types/jest": "^29",
     "@types/node": "^22",
+    "@types/jju": "1.4.5",
+    "jju": "1.4.0",
     "copyfiles": "^2",
     "depcheck": "^1",
     "es-toolkit": "^1.16.0",
-    "esbuild": "^0",
+    "esbuild": "^0.23.0",
     "eslint": "^9",
     "eslint-plugin-prettier": "^5",
     "globals": "^15",
