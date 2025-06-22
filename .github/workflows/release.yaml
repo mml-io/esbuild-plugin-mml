@@ -23,9 +23,9 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: "Retrieve Dependencies and Build Artifacts"
-        id: retrieve-deps-and-build
-        uses: ./.github/actions/retrieve-deps-and-build
+      - name: "NPM Install, Build, and Cache"
+        id: npm-install-build-and-cache
+        uses: ./.github/actions/npm-install-build-and-cache
 
       - name: Publish
         run: |
