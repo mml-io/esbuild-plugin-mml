@@ -4,9 +4,12 @@ import a from "mml:./a";
 const name = "my-world";
 
 export default {
-  mmlDocuments: {
-    duck: {
-      url: a,
+  name,
+  mmlDocumentsConfiguration: {
+    mmlDocuments: {
+      duck: {
+        url: a,
+      },
     },
   },
 } satisfies MMLWorldConfig;

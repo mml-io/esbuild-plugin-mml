@@ -5,7 +5,13 @@
   ],
   "exclude": [
     "./test/generated",
-    "./dist"
+    "./dist",
+    "./test/src/circular-a.ts",
+    "./test/src/circular-b.ts",
+    "./test/src/typescript-error.ts",
+    "./test/scratch/watch/circular-a.ts",
+    "./test/scratch/watch/circular-b.ts",
+    "./test/scratch/watch/typescript-error.ts"
   ],
   "compilerOptions": {
     "moduleResolution": "bundler",
@@ -13,9 +19,9 @@
     "target": "es2021",
     "esModuleInterop": true,
     "strict": true,
+    "allowJs": true,
     "sourceMap": true,
     "skipLibCheck": true,
-    "noEmit": true,
     "paths": {
       "@mml-io/esbuild-plugin-mml": [
         "./src/index.ts"

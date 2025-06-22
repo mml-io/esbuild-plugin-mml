@@ -1,0 +1,358 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`HTML Processing should handle HTML files as entry points: generated/html-processing/html-entry-points/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`HTML Processing should handle HTML files as entry points: generated/html-processing/html-entry-points/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should handle HTML files as entry points: generated/html-processing/html-entry-points/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`HTML Processing should handle HTML files with embedded scripts and styles: generated/html-processing/embedded-content/embedded.js 1`] = `
+"(() => {
+  var embedded_default = \`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Embedded Content</title>
+          <style>
+            body { background-color: #f0f0f0; }
+            .container { max-width: 800px; margin: 0 auto; }
+            h1 { color: #333; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1 id="title">Dynamic Title</h1>
+            <p>This page has embedded JavaScript and CSS.</p>
+            <button onclick="changeTitle()">Change Title</button>
+          </div>
+          
+          <script>
+            function changeTitle() {
+              document.getElementById('title').textContent = 'Title Changed!';
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+              console.log('Page loaded with embedded scripts');
+            });
+          <\\/script>
+        </body>
+      </html>
+    \`;
+})();
+"
+`;
+
+exports[`HTML Processing should handle HTML files with embedded scripts and styles: generated/html-processing/embedded-content/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-generated-html-processing-embedded-test-embedded.html": "test-generated-html-processing-embedded-test-embedded.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should handle HTML files with embedded scripts and styles: generated/html-processing/embedded-content/test-generated-html-processing-embedded-test-embedded.html 1`] = `
+"
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Embedded Content</title>
+          <style>
+            body { background-color: #f0f0f0; }
+            .container { max-width: 800px; margin: 0 auto; }
+            h1 { color: #333; }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <h1 id="title">Dynamic Title</h1>
+            <p>This page has embedded JavaScript and CSS.</p>
+            <button onclick="changeTitle()">Change Title</button>
+          </div>
+          
+          <script>
+            function changeTitle() {
+              document.getElementById('title').textContent = 'Title Changed!';
+            }
+            document.addEventListener('DOMContentLoaded', function() {
+              console.log('Page loaded with embedded scripts');
+            });
+          </script>
+        </body>
+      </html>
+    "
+`;
+
+exports[`HTML Processing should handle HTML files with various content types: generated/html-processing/content-structures/complex.js 1`] = `
+"(() => {
+  var complex_default = '\\n      <!DOCTYPE html>\\n      <html lang="en">\\n        <head>\\n          <meta charset="UTF-8">\\n          <meta name="viewport" content="width=device-width, initial-scale=1.0">\\n          <title>Complex HTML</title>\\n        </head>\\n        <body>\\n          <header>\\n            <nav>\\n              <ul>\\n                <li><a href="#home">Home</a></li>\\n                <li><a href="#about">About</a></li>\\n              </ul>\\n            </nav>\\n          </header>\\n          <main>\\n            <section id="content">\\n              <article>\\n                <h1>Article Title</h1>\\n                <p>Some content here.</p>\\n              </article>\\n            </section>\\n          </main>\\n          <footer>\\n            <p>&copy; 2023 Test</p>\\n          </footer>\\n        </body>\\n      </html>\\n    ';
+})();
+"
+`;
+
+exports[`HTML Processing should handle HTML files with various content types: generated/html-processing/content-structures/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-generated-html-processing-html-test-complex.html": "test-generated-html-processing-html-test-complex.html",
+    "test-generated-html-processing-html-test-simple.html": "test-generated-html-processing-html-test-simple.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should handle HTML files with various content types: generated/html-processing/content-structures/simple.js 1`] = `
+"(() => {
+  var simple_default = "<!DOCTYPE html><html><head><title>Simple</title></head><body><h1>Hello</h1></body></html>";
+})();
+"
+`;
+
+exports[`HTML Processing should handle HTML files with various content types: generated/html-processing/content-structures/test-generated-html-processing-html-test-complex.html 1`] = `
+"
+      <!DOCTYPE html>
+      <html lang="en">
+        <head>
+          <meta charset="UTF-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Complex HTML</title>
+        </head>
+        <body>
+          <header>
+            <nav>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+              </ul>
+            </nav>
+          </header>
+          <main>
+            <section id="content">
+              <article>
+                <h1>Article Title</h1>
+                <p>Some content here.</p>
+              </article>
+            </section>
+          </main>
+          <footer>
+            <p>&copy; 2023 Test</p>
+          </footer>
+        </body>
+      </html>
+    "
+`;
+
+exports[`HTML Processing should handle HTML files with various content types: generated/html-processing/content-structures/test-generated-html-processing-html-test-simple.html 1`] = `"<!DOCTYPE html><html><head><title>Simple</title></head><body><h1>Hello</h1></body></html>"`;
+
+exports[`HTML Processing should handle complex HTML structures and nested elements: generated/html-processing/complex-structures/complex.js 1`] = `
+"(() => {
+  var complex_default = '\\n      <!DOCTYPE html>\\n      <html>\\n        <head>\\n          <title>Complex Structure</title>\\n        </head>\\n        <body>\\n          <div class="wrapper">\\n            <header class="main-header">\\n              <nav class="navigation">\\n                <ul class="nav-list">\\n                  <li class="nav-item">\\n                    <a href="#section1" class="nav-link">\\n                      <span class="link-text">Section 1</span>\\n                      <span class="link-icon">\\u2192</span>\\n                    </a>\\n                    <ul class="sub-nav">\\n                      <li><a href="#subsection1">Sub 1</a></li>\\n                      <li><a href="#subsection2">Sub 2</a></li>\\n                    </ul>\\n                  </li>\\n                </ul>\\n              </nav>\\n            </header>\\n            \\n            <main class="content">\\n              <section id="section1" class="content-section">\\n                <article class="article">\\n                  <header class="article-header">\\n                    <h1 class="article-title">Complex Article</h1>\\n                    <div class="article-meta">\\n                      <time datetime="2023-01-01">January 1, 2023</time>\\n                      <address class="author">\\n                        <a rel="author" href="/author">John Doe</a>\\n                      </address>\\n                    </div>\\n                  </header>\\n                  \\n                  <div class="article-content">\\n                    <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>\\n                    <blockquote cite="https://example.com">\\n                      <p>This is a quoted paragraph.</p>\\n                      <footer>\\n                        \\u2014 <cite>Famous Author</cite>\\n                      </footer>\\n                    </blockquote>\\n                    \\n                    <figure class="image-figure">\\n                      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzMzMzMyIvPjwvc3ZnPg==" alt="Test image" />\\n                      <figcaption>This is a test image caption</figcaption>\\n                    </figure>\\n                    \\n                    <details class="expandable-content">\\n                      <summary>Click to expand</summary>\\n                      <div class="hidden-content">\\n                        <p>This content was hidden.</p>\\n                        <ul>\\n                          <li>Item 1</li>\\n                          <li>Item 2</li>\\n                        </ul>\\n                      </div>\\n                    </details>\\n                  </div>\\n                </article>\\n              </section>\\n            </main>\\n            \\n            <aside class="sidebar">\\n              <section class="widget">\\n                <h3>Related Links</h3>\\n                <nav class="widget-nav">\\n                  <ul>\\n                    <li><a href="#related1">Related 1</a></li>\\n                    <li><a href="#related2">Related 2</a></li>\\n                  </ul>\\n                </nav>\\n              </section>\\n            </aside>\\n            \\n            <footer class="main-footer">\\n              <div class="footer-content">\\n                <p>&copy; 2023 Complex Structure Test</p>\\n              </div>\\n            </footer>\\n          </div>\\n        </body>\\n      </html>\\n    ';
+})();
+"
+`;
+
+exports[`HTML Processing should handle complex HTML structures and nested elements: generated/html-processing/complex-structures/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-generated-html-processing-complex-test-complex.html": "test-generated-html-processing-complex-test-complex.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should handle complex HTML structures and nested elements: generated/html-processing/complex-structures/test-generated-html-processing-complex-test-complex.html 1`] = `
+"
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Complex Structure</title>
+        </head>
+        <body>
+          <div class="wrapper">
+            <header class="main-header">
+              <nav class="navigation">
+                <ul class="nav-list">
+                  <li class="nav-item">
+                    <a href="#section1" class="nav-link">
+                      <span class="link-text">Section 1</span>
+                      <span class="link-icon">→</span>
+                    </a>
+                    <ul class="sub-nav">
+                      <li><a href="#subsection1">Sub 1</a></li>
+                      <li><a href="#subsection2">Sub 2</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </nav>
+            </header>
+            
+            <main class="content">
+              <section id="section1" class="content-section">
+                <article class="article">
+                  <header class="article-header">
+                    <h1 class="article-title">Complex Article</h1>
+                    <div class="article-meta">
+                      <time datetime="2023-01-01">January 1, 2023</time>
+                      <address class="author">
+                        <a rel="author" href="/author">John Doe</a>
+                      </address>
+                    </div>
+                  </header>
+                  
+                  <div class="article-content">
+                    <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
+                    <blockquote cite="https://example.com">
+                      <p>This is a quoted paragraph.</p>
+                      <footer>
+                        — <cite>Famous Author</cite>
+                      </footer>
+                    </blockquote>
+                    
+                    <figure class="image-figure">
+                      <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgZmlsbD0iIzMzMzMzMyIvPjwvc3ZnPg==" alt="Test image" />
+                      <figcaption>This is a test image caption</figcaption>
+                    </figure>
+                    
+                    <details class="expandable-content">
+                      <summary>Click to expand</summary>
+                      <div class="hidden-content">
+                        <p>This content was hidden.</p>
+                        <ul>
+                          <li>Item 1</li>
+                          <li>Item 2</li>
+                        </ul>
+                      </div>
+                    </details>
+                  </div>
+                </article>
+              </section>
+            </main>
+            
+            <aside class="sidebar">
+              <section class="widget">
+                <h3>Related Links</h3>
+                <nav class="widget-nav">
+                  <ul>
+                    <li><a href="#related1">Related 1</a></li>
+                    <li><a href="#related2">Related 2</a></li>
+                  </ul>
+                </nav>
+              </section>
+            </aside>
+            
+            <footer class="main-footer">
+              <div class="footer-content">
+                <p>&copy; 2023 Complex Structure Test</p>
+              </div>
+            </footer>
+          </div>
+        </body>
+      </html>
+    "
+`;
+
+exports[`HTML Processing should handle mml: imports of HTML files: generated/html-processing/mml-html-imports/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`HTML Processing should handle mml: imports of HTML files: generated/html-processing/mml-html-imports/html-importer.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  function html_importer_default() {
+    return d_default;
+  }
+})();
+"
+`;
+
+exports[`HTML Processing should handle mml: imports of HTML files: generated/html-processing/mml-html-imports/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-c-d.html": "test-src-c-d.html",
+    "test-src-html-importer.html": "test-src-html-importer.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should handle mml: imports of HTML files: generated/html-processing/mml-html-imports/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`HTML Processing should handle mml: imports of HTML files: generated/html-processing/mml-html-imports/test-src-html-importer.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  function html_importer_default() {
+    return d_default;
+  }
+})();
+</script>"
+`;
+
+exports[`HTML Processing should process the existing c/d.html file: generated/html-processing/subdirectory-html/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`HTML Processing should process the existing c/d.html file: generated/html-processing/subdirectory-html/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {},
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`HTML Processing should process the existing c/d.html file: generated/html-processing/subdirectory-html/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;

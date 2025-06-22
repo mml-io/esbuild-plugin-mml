@@ -1,0 +1,344 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "media/files/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/media/files/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Asset Handling should copy assets to correct output directory based on assetDir option: generated/asset-handling/custom-assetdir/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://cdn.example.com/v2/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "static/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "https://cdn.example.com/v2/"
+}"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/static/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "https://cdn.example.com/v2/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Asset Handling should generate correct asset URLs with custom assetPrefix: generated/asset-handling/custom-prefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Asset Handling should handle assets in subdirectories: generated/asset-handling/nested-assets/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Asset Handling should handle assets with complex paths containing special characters: generated/asset-handling/special-chars/assets/test_src_special-assets_special-asset.glb 1`] = `"test_src_special-assets_special-asset.glb"`;
+
+exports[`Asset Handling should handle assets with complex paths containing special characters: generated/asset-handling/special-chars/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-special-import.html": "test-src-special-import.html"
+  },
+  "assetNameToPath": {
+    "test_src_special-assets_special-asset.glb": "assets/test_src_special-assets_special-asset.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/special/"
+}"
+`;
+
+exports[`Asset Handling should handle assets with complex paths containing special characters: generated/asset-handling/special-chars/special-import.js 1`] = `
+"(() => {
+  var special_asset_default = "/special/test_src_special-assets_special-asset.glb";
+  function special_import_default() {
+    return special_asset_default;
+  }
+})();
+"
+`;
+
+exports[`Asset Handling should handle assets with complex paths containing special characters: generated/asset-handling/special-chars/test-src-special-import.html 1`] = `
+"<body></body><script>(() => {
+  var special_asset_default = "/special/test_src_special-assets_special-asset.glb";
+  function special_import_default() {
+    return special_asset_default;
+  }
+})();
+</script>"
+`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/assets/test_generated_asset-handling_src_audio.mp3 1`] = `"test_generated_asset-handling_src_audio.mp3"`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/assets/test_generated_asset-handling_src_data.json 1`] = `"{"test":"data"}"`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/assets/test_generated_asset-handling_src_image.png 1`] = `"test_generated_asset-handling_src_image.png"`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-generated-asset-handling-src-test.html": "test-generated-asset-handling-src-test.html"
+  },
+  "assetNameToPath": {
+    "test_generated_asset-handling_src_audio.mp3": "assets/test_generated_asset-handling_src_audio.mp3",
+    "test_generated_asset-handling_src_data.json": "assets/test_generated_asset-handling_src_data.json",
+    "test_generated_asset-handling_src_image.png": "assets/test_generated_asset-handling_src_image.png"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/test.js 1`] = `
+"(() => {
+  var image_default = "/test_generated_asset-handling_src_image.png";
+  var audio_default = "/test_generated_asset-handling_src_audio.mp3";
+  var data_default = "/test_generated_asset-handling_src_data.json";
+  console.log(image_default, audio_default, data_default);
+})();
+"
+`;
+
+exports[`Asset Handling should handle different asset types beyond .glb files: generated/asset-handling/different-assets/test-generated-asset-handling-src-test.html 1`] = `
+"<body></body><script>(() => {
+  var image_default = "/test_generated_asset-handling_src_image.png";
+  var audio_default = "/test_generated_asset-handling_src_audio.mp3";
+  var data_default = "/test_generated_asset-handling_src_data.json";
+  console.log(image_default, audio_default, data_default);
+})();
+</script>"
+`;
+
+exports[`Asset Handling should handle duplicate asset names in different directories: generated/asset-handling/duplicate-names/assets/test_generated_asset-handling_src_folder1_asset.png 1`] = `"test_generated_asset-handling_src_folder1_asset.png"`;
+
+exports[`Asset Handling should handle duplicate asset names in different directories: generated/asset-handling/duplicate-names/assets/test_generated_asset-handling_src_folder2_asset.png 1`] = `"test_generated_asset-handling_src_folder2_asset.png"`;
+
+exports[`Asset Handling should handle duplicate asset names in different directories: generated/asset-handling/duplicate-names/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-generated-asset-handling-src-test.html": "test-generated-asset-handling-src-test.html"
+  },
+  "assetNameToPath": {
+    "test_generated_asset-handling_src_folder1_asset.png": "assets/test_generated_asset-handling_src_folder1_asset.png",
+    "test_generated_asset-handling_src_folder2_asset.png": "assets/test_generated_asset-handling_src_folder2_asset.png"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Asset Handling should handle duplicate asset names in different directories: generated/asset-handling/duplicate-names/test.js 1`] = `
+"(() => {
+  var asset_default = "/test_generated_asset-handling_src_folder1_asset.png";
+  var asset_default2 = "/test_generated_asset-handling_src_folder2_asset.png";
+  console.log(asset_default, asset_default2);
+})();
+"
+`;
+
+exports[`Asset Handling should handle duplicate asset names in different directories: generated/asset-handling/duplicate-names/test-generated-asset-handling-src-test.html 1`] = `
+"<body></body><script>(() => {
+  var asset_default = "/test_generated_asset-handling_src_folder1_asset.png";
+  var asset_default2 = "/test_generated_asset-handling_src_folder2_asset.png";
+  console.log(asset_default, asset_default2);
+})();
+</script>"
+`;

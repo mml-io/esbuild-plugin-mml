@@ -1,0 +1,129 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b";
+  var d_default = "ws:///test-src-c-d";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a": "test-src-a",
+    "test-src-b": "test-src-b",
+    "test-src-c-d": "test-src-c-d"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/test-src-a 1`] = `"test-src-a"`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/test-src-b 1`] = `"test-src-b"`;
+
+exports[`Plugin Options and Configuration should strip html extension when stripHtmlExtension is true: generated/plugin-options/strip-html-extension/test-src-c-d 1`] = `"test-src-c-d"`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/assets/test_src_duck.glb 1`] = `"test_src_duck.glb"`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "test-src-a.html": "test-src-a.html",
+    "test-src-b.html": "test-src-b.html",
+    "test-src-c-d.html": "test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_src_duck.glb": "assets/test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-src-b.html";
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Plugin Options and Configuration should use appropriate defaults when options are not provided: generated/plugin-options/default-options/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;

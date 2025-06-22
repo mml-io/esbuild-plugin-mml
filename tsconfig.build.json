@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "include": ["./build.ts", "./eslint.config.mjs", "./jest.config.js"],
-  "compilerOptions": {
-    "allowJs": true,
-  }
-}

@@ -1,0 +1,316 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/a.js/1 1`] = `
+"(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/a.js/2 1`] = `
+"(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/a.js/3 1`] = `
+"(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/assets/test_scratch_watch_duck.glb/1 1`] = `"test_scratch_watch_duck.glb"`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/assets/test_scratch_watch_duck.glb/2 1`] = `"test_scratch_watch_duck.glb"`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/assets/test_scratch_watch_duck.glb/3 1`] = `"test_scratch_watch_duck.glb"`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/b.js/1 1`] = `
+"(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/b.js/2 1`] = `
+"(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/b.js/3 1`] = `
+"(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/c/d.js/1 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/c/d.js/2 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/c/d.js/3 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/manifest.json/1 1`] = `
+"{
+  "worlds": [
+    "test-scratch-watch-world.json"
+  ],
+  "documentNameToPath": {
+    "test-scratch-watch-a.html": "test-scratch-watch-a.html",
+    "test-scratch-watch-b.html": "test-scratch-watch-b.html",
+    "test-scratch-watch-c-d.html": "test-scratch-watch-c-d.html"
+  },
+  "assetNameToPath": {
+    "test_scratch_watch_duck.glb": "assets/test_scratch_watch_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/manifest.json/2 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {},
+  "assetNameToPath": {
+    "test_scratch_watch_duck.glb": "assets/test_scratch_watch_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/manifest.json/3 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {},
+  "assetNameToPath": {
+    "test_scratch_watch_duck.glb": "assets/test_scratch_watch_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-a.html/1 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-a.html/2 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-a.html/3 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///test-scratch-watch-b.html";
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/test_scratch_watch_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-b.html/1 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-b.html/2 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-b.html/3 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///test-scratch-watch-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-c-d.html/1 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-c-d.html/2 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-c-d.html/3 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-world.json/1 1`] = `
+"{
+  "name": "my-world",
+  "mmlDocumentsConfiguration": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///test-scratch-watch-a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-world.json/2 1`] = `
+"{
+  "name": "my-world",
+  "mmlDocumentsConfiguration": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///test-scratch-watch-a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/test-scratch-watch-world.json/3 1`] = `
+"{
+  "name": "my-world",
+  "mmlDocumentsConfiguration": {
+    "mmlDocuments": {
+      "duck": {
+        "url": "ws:///test-scratch-watch-a.html"
+      }
+    }
+  }
+}"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/world.js/1 1`] = `
+"(() => {
+  var a_default = "ws:///test-scratch-watch-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/world.js/2 1`] = `
+"(() => {
+  var a_default = "ws:///test-scratch-watch-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+"
+`;
+
+exports[`Watch Mode and Context watch: generated/relative-outpath/context/watch/world.js/3 1`] = `
+"(() => {
+  var a_default = "ws:///test-scratch-watch-a.html";
+  var name = "my-world";
+  var world_default = {
+    name,
+    mmlDocumentsConfiguration: {
+      mmlDocuments: {
+        duck: {
+          url: a_default
+        }
+      }
+    }
+  };
+})();
+"
+`;
