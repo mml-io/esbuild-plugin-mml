@@ -39,7 +39,6 @@
     "depcheck": "depcheck",
     "lint": "eslint \"./{src,test}/**/*.{js,jsx,ts,tsx}\" --max-warnings 0",
     "lint-fix": "eslint \"./{src,test}/**/*.{js,jsx,ts,tsx}\" --fix",
-    "prepublishOnly": "npm test",
     "jest": "jest",
     "test": "jest",
     "type-check": "tsc --noEmit"
