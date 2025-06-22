@@ -9,8 +9,6 @@ permissions:
 on:
   push:
     branches: [ main ]
-    tags:
-      - v*
 
 jobs:
   publish-release-packages:
