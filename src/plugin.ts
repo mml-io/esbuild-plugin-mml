@@ -24,6 +24,7 @@ export function mml(options: MMLPluginOptions = {}): esbuild.Plugin {
     assetPrefix = "/",
     documentPrefix = "ws:///",
     stripHtmlExtension = false,
+    globalNamePrefix = "",
   } = options;
 
   const log = verbose
@@ -77,12 +78,14 @@ export function mml(options: MMLPluginOptions = {}): esbuild.Plugin {
         discoveredEntryPoints,
         sourceRoot,
         stripHtmlExtension,
+        globalNamePrefix,
       );
 
       if (verbose) {
         log("configuration:", {
           assetPrefix,
           documentPrefix,
+          globalNamePrefix,
           assetDir,
           sourceRoot,
           outputDirectory,
@@ -106,6 +109,7 @@ export function mml(options: MMLPluginOptions = {}): esbuild.Plugin {
           assetPrefix,
           assets,
           build,
+          globalNamePrefix,
         ),
       );
 

@@ -21,65 +21,63 @@ describe("World Configuration", () => {
       import type { MMLWorldConfig } from "@mml-io/esbuild-plugin-mml";
       
       export default {
-        mmlDocuments: {
-          "test-document": {
-            url: "test-document.html",
-            position: { x: 1, y: 2, z: 3 },
-            rotation: { x: 0, y: 90, z: 0 },
-            scale: { x: 2, y: 2, z: 2 }
+        name: "my-world",
+        mmlDocumentsConfiguration: {
+          mmlDocuments: {
+            "test-document": {
+              url: "test-document.html",
+              position: { x: 1, y: 2, z: 3 },
+              rotation: { x: 0, y: 90, z: 0 },
+              scale: { x: 2, y: 2, z: 2 }
+            }
           }
         }
       } satisfies MMLWorldConfig;
     `);
 
-    try {
-      const config = {
-        outdir,
-        entryPoints: ["test/src/world-with-transform.ts"],
-        loader: {
-          ".glb": "file" as const,
-        },
-        plugins: [mml({
-          assetDir: "assets",
-        })],
-      };
+    const config = {
+      outdir,
+      entryPoints: ["test/src/world-with-transform.ts"],
+      loader: {
+        ".glb": "file" as const,
+      },
+      plugins: [mml({
+        assetDir: "assets",
+      })],
+    };
 
-      const result = await esbuild.build(config);
+    const result = await esbuild.build(config);
+    
+    // Should build successfully
+    expect(result.errors.length).toBe(0);
+    
+    // Check that manifest.json was created
+    const manifestPath = path.join(outdir, "manifest.json");
+    const manifestExists = await fsp.access(manifestPath).then(() => true).catch(() => false);
+    expect(manifestExists).toBe(true);
+    
+    if (manifestExists) {
+      const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf-8"));
+      expect(manifest.worlds).toBeDefined();
+      expect(Array.isArray(manifest.worlds)).toBe(true);
+      expect(manifest.worlds.length).toBe(1);
       
-      // Should build successfully
-      expect(result.errors.length).toBe(0);
+      // Check that the world config was preserved in the JSON file
+      const worldFileName = manifest.worlds[0];
+      const worldFilePath = path.join(outdir, worldFileName);
+      const worldFileExists = await fsp.access(worldFilePath).then(() => true).catch(() => false);
+      expect(worldFileExists).toBe(true);
       
-      // Check that manifest.json was created
-      const manifestPath = path.join(outdir, "manifest.json");
-      const manifestExists = await fsp.access(manifestPath).then(() => true).catch(() => false);
-      expect(manifestExists).toBe(true);
-      
-      if (manifestExists) {
-        const manifest = JSON.parse(await fsp.readFile(manifestPath, "utf-8"));
-        expect(manifest.worlds).toBeDefined();
-        expect(Array.isArray(manifest.worlds)).toBe(true);
-        expect(manifest.worlds.length).toBe(1);
-        
-        // Check that the world config was preserved in the JSON file
-        const worldFileName = manifest.worlds[0];
-        const worldFilePath = path.join(outdir, worldFileName);
-        const worldFileExists = await fsp.access(worldFilePath).then(() => true).catch(() => false);
-        expect(worldFileExists).toBe(true);
-        
-        const worldConfig = JSON.parse(await fsp.readFile(worldFilePath, "utf-8"));
-        expect(worldConfig).toBeDefined();
-        expect(worldConfig.mmlDocuments).toBeDefined();
-        expect(worldConfig.mmlDocuments["test-document"]).toBeDefined();
-        expect(worldConfig.mmlDocuments["test-document"].position).toEqual({ x: 1, y: 2, z: 3 });
-        expect(worldConfig.mmlDocuments["test-document"].rotation).toEqual({ x: 0, y: 90, z: 0 });
-        expect(worldConfig.mmlDocuments["test-document"].scale).toEqual({ x: 2, y: 2, z: 2 });
-      }
-      
-    } catch (error) {
-      fail(`World config with transform properties failed: ${error}`);
-    } finally {
-      // Clean up
-      await fsp.rm(worldWithTransformFile, { force: true });
+      const worldConfig = JSON.parse(await fsp.readFile(worldFilePath, "utf-8"));
+      expect(worldConfig).toBeDefined();
+      expect(worldConfig.name).toBe("my-world");
+
+      expect(worldConfig.mmlDocumentsConfiguration).toBeDefined();
+      expect(worldConfig.mmlDocumentsConfiguration.mmlDocuments).toBeDefined();
+      expect(worldConfig.mmlDocumentsConfiguration.mmlDocuments["test-document"]).toBeDefined();
+      expect(worldConfig.mmlDocumentsConfiguration.mmlDocuments["test-document"].position).toEqual({ x: 1, y: 2, z: 3 });
+      expect(worldConfig.mmlDocumentsConfiguration.mmlDocuments["test-document"].rotation).toEqual({ x: 0, y: 90, z: 0 });
+      expect(worldConfig.mmlDocumentsConfiguration.mmlDocuments["test-document"].scale).toEqual({ x: 2, y: 2, z: 2 });
     }
   });
 

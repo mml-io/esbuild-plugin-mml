@@ -228,6 +228,158 @@ exports[`Basic MML Plugin Functionality with absolute outdir path with documentP
 "
 `;
 
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/a.js 1`] = `
+"(() => {
+  var b_default = "docs/myapp-test-src-b.html";
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "assets/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/b.js 1`] = `
+"(() => {
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "myapp-test-src-a.html": "myapp-test-src-a.html",
+    "myapp-test-src-b.html": "myapp-test-src-b.html",
+    "myapp-test-src-c-d.html": "myapp-test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "myapp-test_src_duck.glb": "media/myapp-test_src_duck.glb"
+  },
+  "documentPrefix": "docs/",
+  "assetPrefix": "assets/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/media/myapp-test_src_duck.glb 1`] = `"myapp-test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/myapp-test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "docs/myapp-test-src-b.html";
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "assets/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/myapp-test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix and custom prefixes: generated/absolute-outpath/globalNamePrefixWithCustom/myapp-test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///myapp-test-src-b.html";
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/assets/myapp-test_src_duck.glb 1`] = `"myapp-test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "myapp-test-src-a.html": "myapp-test-src-a.html",
+    "myapp-test-src-b.html": "myapp-test-src-b.html",
+    "myapp-test-src-c-d.html": "myapp-test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "myapp-test_src_duck.glb": "assets/myapp-test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/myapp-test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///myapp-test-src-b.html";
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/myapp-test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with absolute outdir path with globalNamePrefix: generated/absolute-outpath/globalNamePrefix/myapp-test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
 exports[`Basic MML Plugin Functionality with absolute outdir path with new import from output processor: generated/absolute-outpath/new-import/a.js 1`] = `
 "(() => {
   var b_default = "quux:test-src-b.html";
@@ -713,6 +865,158 @@ exports[`Basic MML Plugin Functionality with relative outdir path with documentP
 `;
 
 exports[`Basic MML Plugin Functionality with relative outdir path with documentPrefix: generated/relative-outpath/documentPrefix/test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/a.js 1`] = `
+"(() => {
+  var b_default = "docs/myapp-test-src-b.html";
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "assets/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/b.js 1`] = `
+"(() => {
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "myapp-test-src-a.html": "myapp-test-src-a.html",
+    "myapp-test-src-b.html": "myapp-test-src-b.html",
+    "myapp-test-src-c-d.html": "myapp-test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "myapp-test_src_duck.glb": "media/myapp-test_src_duck.glb"
+  },
+  "documentPrefix": "docs/",
+  "assetPrefix": "assets/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/media/myapp-test_src_duck.glb 1`] = `"myapp-test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/myapp-test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "docs/myapp-test-src-b.html";
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "assets/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/myapp-test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "docs/myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix and custom prefixes: generated/relative-outpath/globalNamePrefixWithCustom/myapp-test-src-c-d.html 1`] = `
+"<html>
+  <body>
+    <p>I'm html!</p>
+  </body>
+</html>
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/a.js 1`] = `
+"(() => {
+  var b_default = "ws:///myapp-test-src-b.html";
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/assets/myapp-test_src_duck.glb 1`] = `"myapp-test_src_duck.glb"`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/b.js 1`] = `
+"(() => {
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/c/d.js 1`] = `
+"(() => {
+  var d_default = "<html>\\n  <body>\\n    <p>I'm html!</p>\\n  </body>\\n</html>\\n";
+})();
+"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/manifest.json 1`] = `
+"{
+  "worlds": [],
+  "documentNameToPath": {
+    "myapp-test-src-a.html": "myapp-test-src-a.html",
+    "myapp-test-src-b.html": "myapp-test-src-b.html",
+    "myapp-test-src-c-d.html": "myapp-test-src-c-d.html"
+  },
+  "assetNameToPath": {
+    "myapp-test_src_duck.glb": "assets/myapp-test_src_duck.glb"
+  },
+  "documentPrefix": "ws:///",
+  "assetPrefix": "/"
+}"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/myapp-test-src-a.html 1`] = `
+"<body></body><script>(() => {
+  var b_default = "ws:///myapp-test-src-b.html";
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var duck_default = "/myapp-test_src_duck.glb";
+  console.log(b_default, d_default, duck_default);
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/myapp-test-src-b.html 1`] = `
+"<body></body><script>(() => {
+  var d_default = "ws:///myapp-test-src-c-d.html";
+  var c = "wat-" + d_default;
+  var b = { c, d: d_default };
+  var b_default = b;
+})();
+</script>"
+`;
+
+exports[`Basic MML Plugin Functionality with relative outdir path with globalNamePrefix: generated/relative-outpath/globalNamePrefix/myapp-test-src-c-d.html 1`] = `
 "<html>
   <body>
     <p>I'm html!</p>

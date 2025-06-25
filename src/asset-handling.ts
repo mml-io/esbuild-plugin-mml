@@ -10,6 +10,7 @@ export function createAssetHandler(
   assetPrefix: string,
   assets: Asset[],
   build: esbuild.PluginBuild,
+  globalNamePrefix = "",
 ) {
   return async (
     args: esbuild.OnLoadArgs,
@@ -24,7 +25,12 @@ export function createAssetHandler(
 
     // Generate asset file name based on the source path
     const relativePath = path.relative(sourceRoot, args.path);
-    const fileName = relativePath.replace(/[/\\]/g, "_");
+    let fileName = relativePath.replace(/[/\\]/g, "_");
+
+    // Apply globalNamePrefix to the asset file name if provided
+    if (globalNamePrefix) {
+      fileName = globalNamePrefix + "-" + fileName;
+    }
 
     // Build full asset URL
     const assetUrl = assetPrefix + fileName;

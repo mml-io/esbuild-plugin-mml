@@ -9,6 +9,7 @@ export function createUrlMapping(
   discoveredEntryPoints: DiscoveredEntryPoints,
   sourceRoot: string,
   stripHtmlExtension = false,
+  globalNamePrefix = "",
 ): Record<string, string> {
   const mapping: Record<string, string> = {};
   const allEntryPoints = [
@@ -24,6 +25,11 @@ export function createUrlMapping(
 
     if (stripHtmlExtension) {
       outputUrl = outputUrl.replace(/\.html$/, "");
+    }
+
+    // Apply globalNamePrefix to the document name if provided
+    if (globalNamePrefix) {
+      outputUrl = globalNamePrefix + "-" + outputUrl;
     }
 
     mapping[relativePath] = outputUrl;

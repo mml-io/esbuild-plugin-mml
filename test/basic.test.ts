@@ -163,5 +163,59 @@ describe("Basic MML Plugin Functionality", () => {
         expect(content).toMatchSnapshot(path);
       }
     });
+
+    it("with globalNamePrefix", async () => {
+      const outdir = path.join(outPrefix, "globalNamePrefix");
+      await fsp.rm(outdir, { recursive: true, force: true });
+      const config = {
+        outdir,
+        entryPoints: ["mml:test/src/a.ts"],
+        loader: {
+          ".glb": "file" as const,
+        },
+        plugins: [
+          mml({
+            globalNamePrefix: "myapp",
+            assetDir: "assets",
+          }),
+        ],
+      };
+
+      await esbuild.build(config);
+
+      await waitForDispose();
+
+      for await (const { path, content } of walk(outdir)) {
+        expect(content).toMatchSnapshot(path);
+      }
+    });
+
+    it("with globalNamePrefix and custom prefixes", async () => {
+      const outdir = path.join(outPrefix, "globalNamePrefixWithCustom");
+      await fsp.rm(outdir, { recursive: true, force: true });
+      const config = {
+        outdir,
+        entryPoints: ["mml:test/src/a.ts"],
+        loader: {
+          ".glb": "file" as const,
+        },
+        plugins: [
+          mml({
+            globalNamePrefix: "myapp",
+            documentPrefix: "docs/",
+            assetPrefix: "assets/",
+            assetDir: "media",
+          }),
+        ],
+      };
+
+      await esbuild.build(config);
+
+      await waitForDispose();
+
+      for await (const { path, content } of walk(outdir)) {
+        expect(content).toMatchSnapshot(path);
+      }
+    });
   });
 }); 

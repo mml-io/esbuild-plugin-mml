@@ -1,5 +1,8 @@
 export interface MMLPluginOptions {
   verbose?: boolean;
+  // A prefix to apply to all ids (assets, documents, and worlds) - e.g. if document name was "my-document" and globalNamePrefix was "my-prefix", the document id would be "my-prefix-my-document"
+  // This is applied before the documentPrefix, assetPrefix, and assetDir. It allows "namespacing" of ids to avoid conflicts with other projects.
+  globalNamePrefix?: string;
   documentPrefix?: string;
   assetPrefix?: string;
   assetDir?: string;

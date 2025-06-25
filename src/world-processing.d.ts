@@ -1,1 +1,0 @@
-export declare function processWorldFile(absolutePath: string, jsPath: string, sourceRoot: string, entryPointToOutputUrl: Record<string, string>, documentPrefix: string, outdir: string, log: (...args: unknown[]) => void): Promise<string>;
